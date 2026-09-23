@@ -1,0 +1,105 @@
+.section {
+  background: var(--color-bg);
+  padding: 72px 64px 96px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8a6a2e;
+}
+
+.heading {
+  margin-top: 12px;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: repeat(2, 200px);
+  gap: 4px;
+  margin-top: 32px;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.tileLarge {
+  grid-row: 1 / span 2;
+}
+
+.tileImage {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tile:hover .tileImage {
+  transform: scale(1.04);
+}
+
+.tileOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 11, 11, 0) 40%, rgba(11, 11, 11, 0.8) 100%);
+}
+
+.tileContent {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  right: 16px;
+  color: var(--color-white);
+}
+
+.tileName {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tileLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 1180px) {
+  .section {
+    padding: 64px 40px 80px;
+  }
+  .grid {
+    grid-template-rows: repeat(2, 170px);
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 48px 20px 64px;
+  }
+  .heading {
+    font-size: 26px;
+  }
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 220px repeat(2, 150px);
+  }
+  .tileLarge {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+}

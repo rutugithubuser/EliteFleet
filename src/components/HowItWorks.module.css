@@ -1,0 +1,163 @@
+.section {
+  background: var(--color-bg);
+  padding: 88px 64px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8a6a2e;
+}
+
+.heading {
+  margin-top: 14px;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.sub {
+  margin-top: 12px;
+  font-size: 14.5px;
+  color: var(--color-text-secondary);
+}
+
+.steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  text-align: left;
+}
+
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: calc(12.5% - 16px);
+  right: calc(12.5% - 16px);
+  height: 1px;
+  background: var(--color-line);
+  z-index: 0;
+}
+
+.step {
+  position: relative;
+  z-index: 1;
+}
+
+.dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.title {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.copy {
+  margin-top: 6px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.whatsappPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 48px;
+  padding: 12px 22px;
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.whatsappPill strong {
+  color: var(--color-ink);
+}
+
+@media (max-width: 1180px) {
+  .section {
+    padding: 72px 40px;
+  }
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 32px;
+  }
+  .steps::before {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 56px 20px;
+    text-align: left;
+  }
+  .header {
+    max-width: none;
+  }
+  .heading {
+    font-size: 24px;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 32px;
+  }
+  .step {
+    position: relative;
+    padding: 0 0 28px 20px;
+    border-left: 1px solid var(--color-line);
+  }
+  .step:last-child {
+    border-left-color: transparent;
+    padding-bottom: 0;
+  }
+  .dot {
+    position: absolute;
+    left: -16px;
+    top: 0;
+    width: 32px;
+    height: 32px;
+  }
+  .title {
+    margin-left: 24px;
+    margin-top: 2px;
+  }
+  .copy {
+    margin-left: 24px;
+  }
+  .whatsappPill {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+}

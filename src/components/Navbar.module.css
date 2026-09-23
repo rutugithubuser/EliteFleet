@@ -1,0 +1,240 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 96px;
+  padding: 0 64px;
+}
+
+.logoLink {
+  display: block;
+  flex-shrink: 0;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02px;
+  color: var(--color-text-secondary);
+  padding: 8px 0;
+}
+
+.link:hover {
+  color: var(--color-ink);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.linkActive {
+  color: var(--color-ink);
+}
+
+.linkActive .dot {
+  background: var(--color-gold);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 2px;
+  color: var(--color-ink);
+}
+
+.iconButton:hover {
+  border-color: var(--color-ink);
+}
+
+.bookButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 20px;
+  background: var(--color-ink);
+  color: var(--color-white);
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.028px;
+  white-space: nowrap;
+}
+
+.bookButton:hover {
+  opacity: 0.85;
+}
+
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-ink);
+}
+
+/* Tablet */
+@media (max-width: 1180px) {
+  .inner {
+    padding: 0 40px;
+  }
+  .links {
+    display: none;
+  }
+  .menuButton {
+    display: flex;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+/* AFTER */
+@media (max-width: 600px) {
+  .inner {
+    height: 76px;
+    padding: 0 20px;
+  }
+
+  .bookButton {
+    display: none;
+  }
+}
+}
+
+/* Mobile / overlay menu */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.32s ease;
+}
+
+.overlayOpen {
+  transform: translateX(0);
+}
+
+.overlayTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-white);
+}
+
+.overlayLinks {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px 0;
+  overflow-y: auto;
+}
+
+.overlayLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.176px;
+  color: var(--color-white);
+}
+
+.overlayLinkActive {
+  color: var(--color-gold);
+}
+
+.overlaySpacer {
+  flex: 1 0 auto;
+  min-height: 24px;
+}
+
+.overlayActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 20px 32px;
+  flex-shrink: 0;
+}
+
+.overlayBook {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.overlayWhatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.overlayMeta {
+  font-size: 14px;
+  color: var(--color-on-dark-secondary);
+}

@@ -1,0 +1,528 @@
+.hero {
+  background: var(--color-bg);
+  padding: 124px 64px 64px;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.16px;
+  text-transform: uppercase;
+  color: #8a6a2e;
+}
+
+.eyebrowLine {
+  width: 24px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+.hours {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.hoursDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4f9d5a;
+}
+
+.headline {
+  margin-top: 20px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 132px;
+  line-height: 1;
+  letter-spacing: -4px;
+  color: var(--color-ink);
+}
+
+.headline em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: #8a6a2e;
+}
+
+.copyRow {
+  margin-top: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.copy {
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color-text-secondary);
+}
+
+.ctas {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 28px;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03px;
+  white-space: nowrap;
+}
+
+.primaryCta {
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.primaryCta:hover {
+  opacity: 0.85;
+}
+
+.secondaryCta {
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+}
+
+.secondaryCta:hover {
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+/* AFTER */
+.stageWrap {
+  position: relative;
+  margin-top: 40px;
+}
+
+.stage {
+  position: relative;
+  height: 520px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--color-ink);
+}
+
+.stageImage {
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 11, 11, 0.25) 0%,
+    rgba(11, 11, 11, 0) 20%,
+    rgba(11, 11, 11, 0) 60%,
+    rgba(11, 11, 11, 0.75) 100%
+  );
+}
+
+.nowShowing {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-white);
+  border-radius: 2px;
+  padding: 14px 20px;
+}
+
+.nowShowingText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nowShowingLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.16px;
+  text-transform: uppercase;
+  color: #8a6a2e;
+}
+
+.nowShowingModel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.divider {
+  width: 1px;
+  height: 32px;
+  background: var(--color-line);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.priceValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.priceUnit {
+  font-size: 14px;
+  color: #70706b;
+}
+
+.slideControls {
+  position: absolute;
+  top: 37px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(11, 11, 11, 0.55);
+  border-radius: 2px;
+  padding: 4px 4px 4px 16px;
+}
+
+.slideCount {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-white);
+  white-space: nowrap;
+}
+
+.progress {
+  position: relative;
+  width: 120px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  background: var(--color-white);
+}
+
+.slideButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-white);
+  border-radius: 2px;
+  color: var(--color-ink);
+}
+
+.bookingBar {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+  border-radius: 2px;
+  padding: 8px;
+  box-shadow: 0 24px 32px rgba(0, 0, 0, 0.1);
+}
+
+.field {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.field + .field {
+  border-left: 1px solid var(--color-line);
+}
+
+.fieldButton {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  padding: 22px 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+}
+
+.fieldIcon {
+  flex-shrink: 0;
+  color: var(--color-ink);
+}
+
+.fieldText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #70706b;
+  white-space: nowrap;
+}
+
+.fieldValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dateInput {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+  width: 100%;
+  cursor: pointer;
+}
+
+.dateInput:focus {
+  outline: none;
+}
+
+.fieldChevron {
+  flex-shrink: 0;
+  color: var(--color-ink);
+  transition: transform 0.2s ease;
+}
+
+.fieldChevronOpen {
+  transform: rotate(180deg);
+}
+
+.dropdownPanel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  width: max-content;
+  min-width: 100%;
+  max-width: 320px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14);
+  padding: 6px;
+}
+
+.dropdownOption {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--color-ink);
+  text-align: left;
+  border-radius: 2px;
+  white-space: normal;
+}
+
+.dropdownOption:hover {
+  background: var(--color-bg);
+}
+
+.dropdownOptionActive {
+  background: var(--color-bg);
+  font-weight: 600;
+  color: #8a6a2e;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  width: 200px;
+  height: 72px;
+  background: var(--color-gold);
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.searchButton:hover {
+  opacity: 0.9;
+}
+
+/* ---------- Tablet (<=1180px) ---------- */
+@media (max-width: 1180px) {
+  .hero {
+    padding: 124px 40px 48px;
+  }
+
+  .headline {
+    font-size: 92px;
+    letter-spacing: -3.68px;
+  }
+
+  .copy {
+    max-width: 440px;
+  }
+
+  .stage {
+    height: 480px;
+  }
+
+  .bookingBar {
+    left: 20px;
+    right: auto;
+    bottom: auto;
+    top: 356px;
+    width: calc(100% - 40px);
+    max-width: 904px;
+  }
+
+  .fieldButton {
+    padding: 22px 6px 22px 14px;
+  }
+
+  .searchButton {
+    width: 160px;
+  }
+}
+
+/* ---------- Mobile (<=600px) ---------- */
+@media (max-width: 600px) {
+  .hero {
+    padding: 96px 20px 8px;
+  }
+
+  .topRow {
+    gap: 8px;
+  }
+
+  .headline {
+    font-size: 58px;
+    letter-spacing: -2.32px;
+  }
+
+  .headline em {
+    display: block;
+  }
+
+  .copyRow {
+    align-items: flex-start;
+    margin-top: 16px;
+  }
+
+  .copy {
+    max-width: none;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .ctas {
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    flex: 1 1 0;
+    padding: 0 16px;
+  }
+
+ 
+.stageWrap {
+  margin-top: 28px;
+}
+
+.stage {
+  height: 280px;
+}
+  .nowShowing {
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    padding: 10px 14px;
+  }
+
+  .slideControls {
+    display: none;
+  }
+
+  .bookingBar {
+    position: static;
+    margin-top: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  .fieldButton {
+    padding: 16px;
+  }
+
+  .field + .field {
+    border-left: none;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .searchButton {
+    width: 100%;
+    height: 56px;
+    margin-top: 8px;
+  }
+}
