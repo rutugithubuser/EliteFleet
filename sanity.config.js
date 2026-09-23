@@ -1,28 +1,40 @@
 'use client'
 
 /**
- * This configuration is used to for the Sanity Studio that’s mounted on the `\src\app\studio\[[...tool]]\page.jsx` route
+ * This configuration is used for the Sanity Studio mounted on the
+ * `src/app/studio/[[...tool]]/page.jsx` route
  */
 
-import {visionTool} from '@sanity/vision'
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
+import { visionTool } from "@sanity/vision";
+import { defineConfig } from "sanity";
+import { structureTool } from "sanity/structure";
 
-// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
-import {apiVersion, dataset, projectId} from './src/sanity/env'
-import {schema} from './src/sanity/schemaTypes'
-import {structure} from './src/sanity/structure'
+import { apiVersion, dataset, projectId } from "./src/sanity/env";
+import { schema } from "./src/sanity/schemaTypes";
+import { structure } from "./src/sanity/structure";
+
+const singletonTypes = new Set(["homePage", "siteSettings"]);
+const singletonActions = new Set(["publish", "discardChanges", "restore"]);
 
 export default defineConfig({
-  basePath: '/studio',
+  basePath: "/studio",
   projectId,
   dataset,
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
-  schema,
+  schema: {
+    types: schema.types,
+    // Hide Homepage and Site Settings from "Create new document"
+    templates: (templates) =>
+      templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+  },
+  document: {
+    // Only allow publish / discard / restore on singletons (no duplicate or delete)
+    actions: (input, context) =>
+      singletonTypes.has(context.schemaType)
+        ? input.filter(({ action }) => action && singletonActions.has(action))
+        : input,
+  },
   plugins: [
-    structureTool({structure}),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({defaultApiVersion: apiVersion}),
+    structureTool({ structure }),
+    visionTool({ defaultApiVersion: apiVersion }),
   ],
-})
+});
