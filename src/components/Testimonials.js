@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { QuoteIcon } from "./icons/Icons";
 import styles from "./Testimonials.module.css";
+import Reveal from "./Reveal";
 
 export default function Testimonials({ testimonials = [] }) {
   const [active, setActive] = useState(0);
@@ -11,10 +12,12 @@ export default function Testimonials({ testimonials = [] }) {
   const current = testimonials[Math.min(active, testimonials.length - 1)];
 
   return (
-    <section className={styles.section}>
+    <Reveal as="section" className={styles.section}>
       <p className={styles.eyebrow}>Client Stories</p>
       <QuoteIcon size={28} className={styles.quoteIcon} />
-      <p className={styles.quote}>{current.quote}</p>
+      <p className={styles.quote} key={current._id}>
+        {current.quote}
+      </p>
 
       <div className={styles.tabs}>
         {testimonials.map((t, i) => (
@@ -29,6 +32,6 @@ export default function Testimonials({ testimonials = [] }) {
           </button>
         ))}
       </div>
-    </section>
+    </Reveal>
   );
 }

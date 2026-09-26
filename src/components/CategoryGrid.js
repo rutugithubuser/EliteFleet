@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "./icons/Icons";
 import SanityImage from "./SanityImage";
 import CategoryLink from "./CategoryLink";
 import styles from "./CategoryGrid.module.css";
+import Reveal from "./Reveal";
 
 // The design has room for 5 tiles: 1 large + 4 small
 const MAX_TILES = 5;
@@ -12,10 +13,12 @@ export default function CategoryGrid({ categories = [] }) {
 
   return (
     <section className={styles.section}>
-      <p className={styles.eyebrow}>Browse by Category</p>
-      <h2 className={styles.heading}>A Car for Every Occasion</h2>
+      <Reveal>
+        <p className={styles.eyebrow}>Browse by Category</p>
+        <h2 className={styles.heading}>A Car for Every Occasion</h2>
+      </Reveal>
 
-      <div className={styles.grid}>
+      <Reveal stagger delay={0.1} className={styles.grid}>
         {tiles.map((cat, i) => (
           <CategoryLink
             key={cat._id}
@@ -37,7 +40,7 @@ export default function CategoryGrid({ categories = [] }) {
             </span>
           </CategoryLink>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

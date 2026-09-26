@@ -203,3 +203,31 @@
   flex-basis: 80%;
 }
 }
+
+/* ---------- Motion ---------- */
+
+.image {
+  transition: transform 0.7s var(--ease-out);
+}
+
+.cardArrow,
+.arrowBtn,
+.viewAll svg {
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .card:hover .image {
+    transform: scale(1.04);
+  }
+
+  .card:hover .cardArrow {
+    transform: translateX(3px);
+  }
+
+  .viewAll:hover svg {
+    transform: translateX(4px);
+  }
+}

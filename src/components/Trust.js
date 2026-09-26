@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./Trust.module.css";
+import Reveal from "./Reveal";
 
 const ITEMS = [
   {
@@ -27,7 +28,7 @@ const ITEMS = [
 export default function Trust() {
   return (
     <section className={styles.trust}>
-      <div className={styles.grid}>
+      <Reveal stagger className={styles.grid}>
         {ITEMS.map((item) => (
           <div className={styles.item} key={item.title}>
             <Image src={item.icon} alt="" width={28} height={28} className={styles.icon} />
@@ -37,7 +38,7 @@ export default function Trust() {
             </div>
           </div>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

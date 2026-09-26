@@ -2,6 +2,7 @@
 
 import { ArrowRightIcon } from "./icons/Icons";
 import SanityImage from "./SanityImage";
+import Reveal from "./Reveal";
 import { useBooking } from "@/context/BookingContext";
 import { carPriceLabel, carSpecs, formatAed } from "@/lib/format";
 import styles from "./FleetGrid.module.css";
@@ -18,7 +19,7 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
 
   return (
     <section className={styles.section} id="fleet">
-      <div className={styles.header}>
+      <Reveal className={styles.header}>
         <div>
           <p className={styles.eyebrow}>Explore Our Fleet</p>
           <h2 className={styles.heading}>Find Your Perfect Drive</h2>
@@ -27,7 +28,7 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
         <a href="#fleet" className={styles.viewAll}>
           View All Fleet <ArrowRightIcon size={16} />
         </a>
-      </div>
+      </Reveal>
 
       <div className={styles.tabs}>
         {tabs.map((cat) => (
@@ -45,7 +46,8 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
       {visible.length === 0 ? (
         <p className={styles.empty}>No cars in this category yet. Check back soon.</p>
       ) : (
-        <div className={styles.grid}>
+        // key={active}: switching category rebuilds the grid, so the cards animate in again
+        <Reveal stagger key={active} className={styles.grid}>
           {visible.map((car, i) => (
             <article className={styles.card} key={car._id}>
               <div className={styles.imageWrap}>
@@ -88,7 +90,7 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
               </div>
             </article>
           ))}
-        </div>
+        </Reveal>
       )}
 
       <div className={styles.moreWrap}>

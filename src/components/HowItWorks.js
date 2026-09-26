@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { whatsappLink } from "@/lib/format";
 import styles from "./HowItWorks.module.css";
+import Reveal from "./Reveal";
 
 const STEPS = [
   {
@@ -30,13 +31,13 @@ export default function HowItWorks({ settings = {} }) {
 
   return (
     <section className={styles.section}>
-      <div className={styles.header}>
+      <Reveal className={styles.header}>
         <p className={styles.eyebrow}>How It Works</p>
         <h2 className={styles.heading}>Booked in Four Simple Steps</h2>
         <p className={styles.sub}>From choosing your car to picking up the keys — quick, clear and personal.</p>
-      </div>
+      </Reveal>
 
-      <ol className={styles.steps}>
+      <Reveal as="ol" stagger delay={0.1} className={styles.steps}>
         {STEPS.map((step) => (
           <li className={styles.step} key={step.num}>
             <span className={styles.dot}>{step.num}</span>
@@ -44,7 +45,7 @@ export default function HowItWorks({ settings = {} }) {
             <p className={styles.copy}>{step.copy}</p>
           </li>
         ))}
-      </ol>
+      </Reveal>
 
       {whatsapp && (
         <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.whatsappPill}>
