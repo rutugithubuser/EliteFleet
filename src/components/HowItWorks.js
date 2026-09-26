@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { whatsappLink } from "@/lib/format";
 import styles from "./HowItWorks.module.css";
 
 const STEPS = [
@@ -24,7 +25,9 @@ const STEPS = [
   },
 ];
 
-export default function HowItWorks() {
+export default function HowItWorks({ settings = {} }) {
+  const whatsapp = whatsappLink(settings.whatsappNumber);
+
   return (
     <section className={styles.section}>
       <div className={styles.header}>
@@ -43,10 +46,12 @@ export default function HowItWorks() {
         ))}
       </ol>
 
-      <a href="https://wa.me/971585210105" className={styles.whatsappPill}>
-        <Image src="/icons/phone.png" alt="" width={16} height={16} />
-        Prefer to chat? Book directly on WhatsApp <strong>+971 58 521 0105</strong>
-      </a>
+      {whatsapp && (
+        <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.whatsappPill}>
+          <Image src="/icons/phone.png" alt="" width={16} height={16} />
+          Prefer to chat? Book directly on WhatsApp <strong>{settings.phone}</strong>
+        </a>
+      )}
     </section>
   );
 }

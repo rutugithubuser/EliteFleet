@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { phoneLink } from "@/lib/format";
 import styles from "./FinalCta.module.css";
 
-export default function FinalCta() {
+export default function FinalCta({ settings = {} }) {
   return (
     <section className={styles.section}>
       <Image
@@ -27,12 +28,16 @@ export default function FinalCta() {
         </div>
 
         <div className={styles.meta}>
-          <span className={styles.metaItem}>
-            <Image src="/icons/phone.png" alt="" width={14} height={14} /> Call +971 58 521 0105
-          </span>
-          <span className={styles.metaItem}>
-            <Image src="/icons/clock.png" alt="" width={14} height={14} /> Open 8:00 AM – 10:00 PM
-          </span>
+          {settings.phone && (
+            <a href={phoneLink(settings.phone)} className={styles.metaItem}>
+              <Image src="/icons/phone.png" alt="" width={14} height={14} /> Call {settings.phone}
+            </a>
+          )}
+          {settings.openingHours && (
+            <span className={styles.metaItem}>
+              <Image src="/icons/clock.png" alt="" width={14} height={14} /> Open {settings.openingHours}
+            </span>
+          )}
         </div>
       </div>
     </section>

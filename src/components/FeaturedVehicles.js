@@ -1,37 +1,19 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
 import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons/Icons";
+import SanityImage from "./SanityImage";
+import { carPriceLabel } from "@/lib/format";
 import styles from "./FeaturedVehicles.module.css";
 
-const CARS = [
-  {
-    make: "Rolls-Royce",
-    model: "2025 Rolls-Royce Cullinan",
-    price: "From AED 6,499 / day",
-    image: "/images/fleet/rolls-royce-cullinan.png",
-  },
-  {
-    make: "Lamborghini",
-    model: "Lamborghini",
-    price: "Rates on request",
-    image: "/images/fleet/lamborghini.png",
-  },
-  {
-    make: "Mercedes-Benz",
-    model: "Mercedes GLC 200",
-    price: "Contact for pricing",
-    image: "/images/fleet/mercedes-glc200.jpg",
-  },
-];
-
-export default function FeaturedVehicles() {
+export default function FeaturedVehicles({ cars = [] }) {
   const trackRef = useRef(null);
   const [index, setIndex] = useState(0);
 
+  if (cars.length === 0) return null;
+
   function go(dir) {
-    const next = Math.min(Math.max(index + dir, 0), CARS.length - 1);
+    const next = Math.min(Math.max(index + dir, 0), cars.length - 1);
     setIndex(next);
     const track = trackRef.current;
     if (track) {
@@ -62,27 +44,22 @@ export default function FeaturedVehicles() {
       </div>
 
       <div className={styles.track} ref={trackRef}>
-        {CARS.map((car) => (
-          <div className={styles.card} key={car.model}>
-            {car.image ? (
-              <Image
-                src={car.image}
-                alt={car.model}
-                fill
-                sizes="(max-width: 600px) 78vw, 45vw"
-                className={styles.image}
-              />
-            ) : (
-              <div className={styles.imagePlaceholder} aria-hidden="true" />
-            )}
+        {cars.map((car) => (
+          <div className={styles.card} key={car._id}>
+            <SanityImage
+              image={car.image}
+              alt={car.image?.alt || car.name}
+              sizes="(max-width: 600px) 80vw, 47vw"
+              className={styles.image}
+            />
             <div className={styles.cardOverlay}>
-              <p className={styles.cardMake}>{car.make}</p>
+              <p className={styles.cardMake}>{car.brand}</p>
               <div className={styles.cardBottom}>
                 <div>
-                  <p className={styles.cardModel}>{car.model}</p>
-                  <p className={styles.cardPrice}>{car.price}</p>
+                  <p className={styles.cardModel}>{car.name}</p>
+                  <p className={styles.cardPrice}>{carPriceLabel(car)}</p>
                 </div>
-                <a href="#fleet" className={styles.cardArrow} aria-label={`View ${car.model}`}>
+                <a href="#fleet" className={styles.cardArrow} aria-label={`View ${car.name}`}>
                   <ArrowRightIcon size={16} />
                 </a>
               </div>
@@ -96,10 +73,10 @@ export default function FeaturedVehicles() {
         <span className={styles.progress}>
           <span
             className={styles.progressFill}
-            style={{ width: `${((index + 1) / CARS.length) * 100}%` }}
+            style={{ width: `${((index + 1) / cars.length) * 100}%` }}
           />
         </span>
-        <span>{String(CARS.length).padStart(2, "0")}</span>
+        <span>{String(cars.length).padStart(2, "0")}</span>
       </div>
     </section>
   );
