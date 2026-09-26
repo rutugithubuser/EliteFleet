@@ -39,6 +39,18 @@ function useToday() {
   return useSyncExternalStore(noSubscribe, todayLocal, () => "");
 }
 
+// Splits text into words that slide in one after another (see .word in Hero.module.css)
+function AnimatedWords({ text, startAt }) {
+  return text.split(/\s+/).map((word, i) => (
+    <span key={i}>
+      {i > 0 && " "}
+      <span className={styles.word} style={{ "--w": startAt + i }}>
+        {word}
+      </span>
+    </span>
+  ));
+}
+
 function BookingBar({ locations, categoryNames }) {
   const { category, setCategory } = useBooking();
   const [location, setLocation] = useState("Select location");
@@ -128,7 +140,11 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
   const accent = home.heroHeadlineAccent || DEFAULTS.heroHeadlineAccent;
   const description = home.heroDescription || DEFAULTS.heroDescription;
 
+  // After the first manual switch, slide changes animate without the page-load delay
+  const [hasSwitched, setHasSwitched] = useState(false);
+
   function go(dir) {
+    setHasSwitched(true);
     setIndex((i) => (i + dir + slides.length) % slides.length);
   }
 
@@ -148,7 +164,10 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
       </div>
 
       <h1 className={styles.headline}>
-        {headline} <em>{accent}</em>
+        <AnimatedWords text={headline} startAt={0} />{" "}
+        <em>
+          <AnimatedWords text={accent} startAt={headline.split(/\s+/).length} />
+        </em>
       </h1>
 
       <div className={styles.copyRow}>
@@ -165,30 +184,40 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
 
       <div className={styles.stageWrap}>
         <div className={styles.stage}>
-          {slide ? (
-            <SanityImage
-              key={slide._key}
-              image={slide.image}
-              alt={slide.image?.alt || slide.car.name}
-              sizes="100vw"
-              eager={index === 0}
-              className={styles.stageImage}
-            />
+          {slides.length > 0 ? (
+            // All slides are stacked; only the active one is visible, so switching crossfades
+            slides.map((s, i) => (
+              <div
+                key={s._key}
+                className={`${styles.slide} ${i === index ? styles.slideActive : ""}`}
+                aria-hidden={i !== index}
+              >
+                <SanityImage
+                  image={s.image}
+                  alt={s.image?.alt || s.car.name}
+                  sizes="100vw"
+                  eager={i === 0}
+                  className={styles.stageImage}
+                />
+              </div>
+            ))
           ) : (
-            <Image
-              src="/images/hero-phantom.png"
-              alt="Rolls-Royce Phantom in a Dubai parking structure"
-              fill
-              loading="eager"
-              fetchPriority="high"
-              sizes="100vw"
-              className={styles.stageImage}
-            />
+            <div className={`${styles.slide} ${styles.slideActive}`}>
+              <Image
+                src="/images/hero-phantom.png"
+                alt="Rolls-Royce Phantom in a Dubai parking structure"
+                fill
+                loading="eager"
+                fetchPriority="high"
+                sizes="100vw"
+                className={styles.stageImage}
+              />
+            </div>
           )}
           <div className={styles.scrim} />
 
           {slide && (
-            <div className={styles.nowShowing}>
+            <div className={`${styles.nowShowing} ${hasSwitched ? styles.noDelay : ""}`} key={slide._key}>
               <div className={styles.nowShowingText}>
                 <span className={styles.nowShowingLabel}>Now Showing</span>
                 <span className={styles.nowShowingModel}>{slide.car.name}</span>

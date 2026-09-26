@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRightIcon } from "./icons/Icons";
 import styles from "./EliteExperience.module.css";
+import Reveal from "./Reveal";
 
 const POINTS = [
   {
@@ -23,7 +24,7 @@ const POINTS = [
 export default function EliteExperience() {
   return (
     <section className={styles.section} id="about">
-      <div className={styles.imageWrap}>
+      <Reveal className={styles.imageWrap}>
         <Image
           src="/images/elite-experience-dawn.png"
           alt="Rolls-Royce Dawn — In the Fleet"
@@ -31,9 +32,9 @@ export default function EliteExperience() {
           sizes="(max-width: 900px) 100vw, 50vw"
           className={styles.image}
         />
-      </div>
+      </Reveal>
 
-      <div className={styles.content}>
+      <Reveal stagger delay={0.15} className={styles.content}>
         <p className={styles.eyebrow}>The Elite Experience</p>
         <h2 className={styles.heading}>
           More Than a
@@ -62,7 +63,7 @@ export default function EliteExperience() {
         <a href="#fleet" className={styles.cta}>
           Discover Elite Fleet <ArrowRightIcon size={16} />
         </a>
-      </div>
+      </Reveal>
     </section>
   );
 }

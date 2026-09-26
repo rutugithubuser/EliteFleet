@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { phoneLink } from "@/lib/format";
 import styles from "./FinalCta.module.css";
+import Reveal from "./Reveal";
 
 export default function FinalCta({ settings = {} }) {
   return (
@@ -13,7 +14,7 @@ export default function FinalCta({ settings = {} }) {
         className={styles.image}
       />
       <div className={styles.scrim} />
-      <div className={styles.content}>
+      <Reveal stagger className={styles.content}>
         <p className={styles.eyebrow}>Book Your Car</p>
         <h2 className={styles.heading}>Ready to Drive?</h2>
         <p className={styles.copy}>Choose your car and start your Dubai journey.</p>
@@ -39,7 +40,7 @@ export default function FinalCta({ settings = {} }) {
             </span>
           )}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

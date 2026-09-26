@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CarIcon, TagIcon } from "./icons/Icons";
 import styles from "./WhyEliteFleet.module.css";
+import Reveal from "./Reveal";
 
 const FEATURES = [
   {
@@ -28,7 +29,7 @@ const FEATURES = [
 export default function WhyEliteFleet() {
   return (
     <section className={styles.section}>
-      <div className={styles.intro}>
+      <Reveal className={styles.intro}>
         <p className={styles.eyebrow}>Why Elite Fleet</p>
         <h2 className={styles.heading}>Built Around Your Journey.</h2>
         <p className={styles.copy}>
@@ -37,9 +38,9 @@ export default function WhyEliteFleet() {
         <a href="#about" className={styles.cta}>
           Read about us →
         </a>
-      </div>
+      </Reveal>
 
-      <div className={styles.grid}>
+      <Reveal stagger delay={0.1} className={styles.grid}>
         {FEATURES.map((f) => (
           <div className={styles.item} key={f.title}>
             {f.Icon ? (
@@ -51,7 +52,7 @@ export default function WhyEliteFleet() {
             <p className={styles.itemCopy}>{f.copy}</p>
           </div>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

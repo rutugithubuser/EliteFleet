@@ -140,3 +140,19 @@
     max-width: none;
   }
 }
+
+/* ---------- Motion ---------- */
+
+.cta {
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.cta svg {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .cta:hover svg {
+    transform: translateX(4px);
+  }
+}

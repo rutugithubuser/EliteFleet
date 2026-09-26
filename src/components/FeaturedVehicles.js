@@ -5,6 +5,7 @@ import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons/Icons
 import SanityImage from "./SanityImage";
 import { carPriceLabel } from "@/lib/format";
 import styles from "./FeaturedVehicles.module.css";
+import Reveal from "./Reveal";
 
 export default function FeaturedVehicles({ cars = [] }) {
   const trackRef = useRef(null);
@@ -24,7 +25,7 @@ export default function FeaturedVehicles({ cars = [] }) {
 
   return (
     <section className={styles.section}>
-      <div className={styles.header}>
+      <Reveal className={styles.header}>
         <div>
           <p className={styles.eyebrow}>Featured Vehicles</p>
           <h2 className={styles.heading}>The Signature Collection</h2>
@@ -41,32 +42,34 @@ export default function FeaturedVehicles({ cars = [] }) {
             <ChevronRightIcon size={18} />
           </button>
         </div>
-      </div>
+      </Reveal>
 
-      <div className={styles.track} ref={trackRef}>
-        {cars.map((car) => (
-          <div className={styles.card} key={car._id}>
-            <SanityImage
-              image={car.image}
-              alt={car.image?.alt || car.name}
-              sizes="(max-width: 600px) 80vw, 47vw"
-              className={styles.image}
-            />
-            <div className={styles.cardOverlay}>
-              <p className={styles.cardMake}>{car.brand}</p>
-              <div className={styles.cardBottom}>
-                <div>
-                  <p className={styles.cardModel}>{car.name}</p>
-                  <p className={styles.cardPrice}>{carPriceLabel(car)}</p>
+      <Reveal delay={0.1}>
+        <div className={styles.track} ref={trackRef}>
+          {cars.map((car) => (
+            <div className={styles.card} key={car._id}>
+              <SanityImage
+                image={car.image}
+                alt={car.image?.alt || car.name}
+                sizes="(max-width: 600px) 80vw, 47vw"
+                className={styles.image}
+              />
+              <div className={styles.cardOverlay}>
+                <p className={styles.cardMake}>{car.brand}</p>
+                <div className={styles.cardBottom}>
+                  <div>
+                    <p className={styles.cardModel}>{car.name}</p>
+                    <p className={styles.cardPrice}>{carPriceLabel(car)}</p>
+                  </div>
+                  <a href="#fleet" className={styles.cardArrow} aria-label={`View ${car.name}`}>
+                    <ArrowRightIcon size={16} />
+                  </a>
                 </div>
-                <a href="#fleet" className={styles.cardArrow} aria-label={`View ${car.name}`}>
-                  <ArrowRightIcon size={16} />
-                </a>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Reveal>
 
       <div className={styles.progressWrap}>
         <span>{String(index + 1).padStart(2, "0")}</span>

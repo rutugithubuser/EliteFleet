@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Logo from "./Logo";
 import { WhatsappIcon, MenuIcon, CloseIcon, ArrowRightIcon } from "./icons/Icons";
 import { useBooking } from "@/context/BookingContext";
@@ -18,7 +18,21 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
+// True once the page is scrolled more than 80px (always false while pre-building on the server)
+function subscribeToScroll(callback) {
+  window.addEventListener("scroll", callback, { passive: true });
+  return () => window.removeEventListener("scroll", callback);
+}
+function useScrolledPast(px) {
+  return useSyncExternalStore(
+    subscribeToScroll,
+    () => window.scrollY > px,
+    () => false
+  );
+}
+
 export default function Navbar({ settings = {} }) {
+  const scrolled = useScrolledPast(80);
   const [open, setOpen] = useState(false);
   const { setCategory } = useBooking();
   const whatsapp = whatsappLink(settings.whatsappNumber);
@@ -29,7 +43,7 @@ export default function Navbar({ settings = {} }) {
   }
 
   return (
-    <header className={styles.navbar}>
+    <header className={`${styles.navbar} ${scrolled ? styles.navbarSolid : ""}`}>
       <div className={styles.inner}>
         <a
           href="#top"

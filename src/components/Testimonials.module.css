@@ -87,3 +87,24 @@
     overflow-x: auto;
   }
 }
+
+/* ---------- Motion ---------- */
+
+/* The quote fades in each time a different customer is picked */
+@media (prefers-reduced-motion: no-preference) {
+  .quote {
+    animation: fade-in 0.6s var(--ease-out);
+  }
+}
+
+.tab {
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .tab:not(.tabActive):hover {
+    opacity: 0.8;
+  }
+}

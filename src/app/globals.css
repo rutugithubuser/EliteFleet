@@ -15,6 +15,12 @@
   --space-desktop: 64px;
   --space-tablet: 40px;
   --space-mobile: 20px;
+
+  /* Motion: one easing curve and a few durations used everywhere */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.25s;
+  --duration-base: 0.7s;
+  --stagger: 90ms;
 }
 
 * {
@@ -76,5 +82,69 @@ a {
 @media (max-width: 600px) {
   .container {
     padding: 0 var(--space-mobile);
+  }
+}
+
+/* ---------- Scroll reveal (used by the <Reveal> component) ----------
+   Content is only hidden when JavaScript is running and the visitor
+   hasn't asked their device to reduce motion. Without JavaScript,
+   or with "reduce motion" on, everything simply shows as normal. */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  /* Hidden until scrolled into view */
+  [data-reveal="fade"]:not([data-visible]),
+  [data-reveal="stagger"]:not([data-visible]) > * {
+    opacity: 0;
+  }
+
+  /* One block fades up */
+  [data-reveal="fade"][data-visible] {
+    animation: reveal-up var(--duration-base) var(--ease-out) backwards;
+    animation-delay: var(--reveal-delay, 0s);
+  }
+
+  /* Each child fades up, one after another */
+  [data-reveal="stagger"][data-visible] > * {
+    animation: reveal-up var(--duration-base) var(--ease-out) backwards;
+    animation-delay: calc(var(--reveal-delay, 0s) + var(--i, 0) * var(--stagger));
+  }
+
+  [data-reveal="stagger"] > :nth-child(2) { --i: 1; }
+  [data-reveal="stagger"] > :nth-child(3) { --i: 2; }
+  [data-reveal="stagger"] > :nth-child(4) { --i: 3; }
+  [data-reveal="stagger"] > :nth-child(5) { --i: 4; }
+  [data-reveal="stagger"] > :nth-child(6) { --i: 5; }
+  [data-reveal="stagger"] > :nth-child(n + 7) { --i: 6; }
+}
+
+/* Respect the visitor's "reduce motion" setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -526,3 +526,112 @@
     margin-top: 8px;
   }
 }
+
+/* ---------- Motion ---------- */
+
+/* Slides are stacked; the active one fades in over the previous one */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-out);
+}
+
+.slideActive {
+  opacity: 1;
+}
+
+.word {
+  display: inline-block;
+}
+
+.primaryCta svg,
+.searchButton svg {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .primaryCta:hover svg,
+  .searchButton:hover svg {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroZoomOut {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 1. Label + opening hours fade in */
+  .topRow {
+    animation: heroFade 0.6s var(--ease-out) backwards;
+  }
+
+  /* 2. Headline slides in word by word */
+  .word {
+    animation: heroRise 0.8s var(--ease-out) backwards;
+    animation-delay: calc(0.1s + var(--w, 0) * 0.08s);
+  }
+
+  /* 3. Description + buttons */
+  .copyRow {
+    animation: heroSlideUp 0.8s var(--ease-out) 0.45s backwards;
+  }
+
+  /* 4. Car photo slowly settles (plays again whenever a new slide becomes active) */
+  .slideActive .stageImage {
+    animation: heroZoomOut 1.8s var(--ease-out) backwards;
+  }
+
+  /* 5. "Now showing" badge, then the booking bar */
+  .nowShowing,
+  .slideControls {
+    animation: heroFade 0.6s var(--ease-out) 0.7s backwards;
+  }
+
+  .bookingBar {
+    animation: heroSlideUp 0.8s var(--ease-out) 0.6s backwards;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nowShowing.noDelay {
+    animation-delay: 0s;
+  }
+}
