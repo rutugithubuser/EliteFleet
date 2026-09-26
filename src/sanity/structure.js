@@ -14,4 +14,5 @@ export const structure = (S) =>
       S.documentTypeListItem("car").title("Cars"),
       S.documentTypeListItem("category").title("Categories"),
       S.documentTypeListItem("testimonial").title("Testimonials"),
+      S.documentTypeListItem("legalPage").title("Legal pages"),
     ]);

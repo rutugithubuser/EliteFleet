@@ -3,6 +3,7 @@ import SanityImage from "./SanityImage";
 import CategoryLink from "./CategoryLink";
 import styles from "./CategoryGrid.module.css";
 import Reveal from "./Reveal";
+import MaskText from "./MaskText";
 
 // The design has room for 5 tiles: 1 large + 4 small
 const MAX_TILES = 5;
@@ -15,7 +16,9 @@ export default function CategoryGrid({ categories = [] }) {
     <section className={styles.section}>
       <Reveal>
         <p className={styles.eyebrow}>Browse by Category</p>
-        <h2 className={styles.heading}>A Car for Every Occasion</h2>
+        <h2 className={styles.heading}>
+          <MaskText lines="A Car for Every Occasion" />
+        </h2>
       </Reveal>
 
       <Reveal stagger delay={0.1} className={styles.grid}>

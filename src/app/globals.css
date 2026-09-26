@@ -186,6 +186,107 @@ a {
   [data-reveal="stagger"] > :nth-child(n + 7) { --i: 6; }
 }
 
+/* ---------- Masked headings (used by the <MaskText> component) ----------
+   Each line sits in a box with a hidden overflow and slides up into it
+   when its <Reveal> section comes into view. */
+
+.mask-line {
+  display: block;
+  overflow: hidden;
+  /* room for letters that hang below the line (g, y, p) */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.mask-line > span {
+  display: block;
+}
+
+@keyframes mask-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal]:not([data-visible]) .mask-line > span {
+    transform: translateY(110%);
+  }
+
+  [data-reveal][data-visible] .mask-line > span {
+    animation: mask-up 0.9s var(--ease-out) backwards;
+    animation-delay: calc(
+      var(--reveal-delay, 0s) + var(--i, 0) * var(--stagger) + var(--line, 0) * 0.12s + 0.05s
+    );
+  }
+}
+
+/* ---------- Parallax (used by the <Parallax> component) ---------- */
+
+.parallax {
+  position: absolute;
+  inset: -12% 0;
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
+}
+
+/* ---------- Gold shimmer: a soft light that sweeps across gold buttons ---------- */
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer::after {
+    animation: shimmer 5s var(--ease-out) 2s infinite;
+  }
+
+  @media (hover: hover) {
+    .shimmer:hover::after {
+      animation: shimmer-once 0.9s var(--ease-out);
+    }
+  }
+}
+
+@keyframes shimmer-once {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  22%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
 /* Respect the visitor's "reduce motion" setting everywhere */
 @media (prefers-reduced-motion: reduce) {
   *,

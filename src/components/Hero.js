@@ -14,6 +14,9 @@ import SanityImage from "./SanityImage";
 import { useBooking } from "@/context/BookingContext";
 import { carPriceLabel, formatAed } from "@/lib/format";
 import styles from "./Hero.module.css";
+import Link from "next/link";
+import { LINKS } from "@/lib/links";
+import Parallax from "./Parallax";
 
 // Used only if a Homepage field is left empty in Sanity
 const DEFAULTS = {
@@ -122,7 +125,7 @@ function BookingBar({ locations, categoryNames }) {
         onSelect={handleCarType}
       />
 
-      <button type="button" className={styles.searchButton} onClick={handleSearch}>
+      <button type="button" className={`${styles.searchButton} shimmer`} onClick={handleSearch}>
         Search Cars <ArrowRightIcon size={18} />
       </button>
     </div>
@@ -239,12 +242,12 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
       <div className={styles.copyRow}>
         <p className={styles.copy}>{description}</p>
         <div className={styles.ctas}>
-          <a href="#fleet" className={styles.primaryCta}>
+          <Link href={LINKS.fleetSection} className={styles.primaryCta}>
             Explore Fleet <ArrowRightIcon size={18} />
-          </a>
-          <a href="#fleet" className={styles.secondaryCta}>
+          </Link>
+          <Link href={LINKS.booking} className={styles.secondaryCta}>
             Book a Car
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -263,36 +266,38 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          {slides.length > 0 ? (
-            // All slides are stacked; only the active one is visible, so switching crossfades
-            slides.map((s, i) => (
-              <div
-                key={s._key}
-                className={`${styles.slide} ${i === index ? styles.slideActive : ""}`}
-                aria-hidden={i !== index}
-              >
-                <SanityImage
-                  image={s.image}
-                  alt={s.image?.alt || s.car.name}
+          <Parallax strength={0.08}>
+            {slides.length > 0 ? (
+              // All slides are stacked; only the active one is visible, so switching crossfades
+              slides.map((s, i) => (
+                <div
+                  key={s._key}
+                  className={`${styles.slide} ${i === index ? styles.slideActive : ""}`}
+                  aria-hidden={i !== index}
+                >
+                  <SanityImage
+                    image={s.image}
+                    alt={s.image?.alt || s.car.name}
+                    sizes="100vw"
+                    eager={i === 0}
+                    className={styles.stageImage}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className={`${styles.slide} ${styles.slideActive}`}>
+                <Image
+                  src="/images/hero-phantom.png"
+                  alt="Rolls-Royce Phantom in a Dubai parking structure"
+                  fill
+                  loading="eager"
+                  fetchPriority="high"
                   sizes="100vw"
-                  eager={i === 0}
                   className={styles.stageImage}
                 />
               </div>
-            ))
-          ) : (
-            <div className={`${styles.slide} ${styles.slideActive}`}>
-              <Image
-                src="/images/hero-phantom.png"
-                alt="Rolls-Royce Phantom in a Dubai parking structure"
-                fill
-                loading="eager"
-                fetchPriority="high"
-                sizes="100vw"
-                className={styles.stageImage}
-              />
-            </div>
-          )}
+            )}
+          </Parallax>
           <div className={styles.scrim} />
 
           {slide && (

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { whatsappLink } from "@/lib/format";
 import styles from "./HowItWorks.module.css";
 import Reveal from "./Reveal";
+import MaskText from "./MaskText";
 
 const STEPS = [
   {
@@ -33,7 +34,9 @@ export default function HowItWorks({ settings = {} }) {
     <section className={styles.section}>
       <Reveal className={styles.header}>
         <p className={styles.eyebrow}>How It Works</p>
-        <h2 className={styles.heading}>Booked in Four Simple Steps</h2>
+        <h2 className={styles.heading}>
+          <MaskText lines="Booked in Four Simple Steps" />
+        </h2>
         <p className={styles.sub}>From choosing your car to picking up the keys — quick, clear and personal.</p>
       </Reveal>
 
