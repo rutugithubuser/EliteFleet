@@ -9,7 +9,7 @@ export default function Logo({ className, height = 44, dark = false }) {
         width={168}
         height={55}
         style={{ height: "100%", width: "auto", objectFit: "contain" }}
-        priority
+        loading="eager"
       />
     </span>
   );

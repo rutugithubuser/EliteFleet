@@ -4,6 +4,7 @@ import { useState } from "react";
 import Logo from "./Logo";
 import { WhatsappIcon, MenuIcon, CloseIcon, ArrowRightIcon } from "./icons/Icons";
 import { useBooking } from "@/context/BookingContext";
+import { whatsappLink } from "@/lib/format";
 import styles from "./Navbar.module.css";
 
 const LINKS = [
@@ -17,9 +18,10 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ settings = {} }) {
   const [open, setOpen] = useState(false);
   const { setCategory } = useBooking();
+  const whatsapp = whatsappLink(settings.whatsappNumber);
 
   function handleNavClick(link) {
     if (link.category) setCategory(link.category);
@@ -53,15 +55,17 @@ export default function Navbar() {
         </nav>
 
         <div className={styles.actions}>
-          <a
-            href="https://wa.me/971585210105"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.iconButton}
-            aria-label="Chat on WhatsApp"
-          >
-            <WhatsappIcon />
-          </a>
+          {whatsapp && (
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.iconButton}
+              aria-label="Chat on WhatsApp"
+            >
+              <WhatsappIcon />
+            </a>
+          )}
           <a href="#fleet" className={styles.bookButton} onClick={() => handleNavClick({})}>
             Book Now
           </a>
@@ -109,10 +113,14 @@ export default function Navbar() {
           <a href="#fleet" className={styles.overlayBook} onClick={() => handleNavClick({})}>
             Book Now <ArrowRightIcon size={18} />
           </a>
-          <a href="https://wa.me/971585210105" className={styles.overlayWhatsapp}>
-            WhatsApp&nbsp;&nbsp;+971 58 521 0105
-          </a>
-          <p className={styles.overlayMeta}>hi@elitefleet.ae&nbsp;&middot;&nbsp;8:00 AM – 10:00 PM</p>
+          {whatsapp && (
+            <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.overlayWhatsapp}>
+              WhatsApp&nbsp;&nbsp;{settings.phone}
+            </a>
+          )}
+          <p className={styles.overlayMeta}>
+            {[settings.email, settings.openingHours].filter(Boolean).join("  ·  ")}
+          </p>
         </div>
       </div>
     </header>

@@ -84,6 +84,16 @@
   margin-top: 32px;
 }
 
+.empty {
+  margin-top: 32px;
+  padding: 48px 20px;
+  border: 1px dashed var(--color-line-strong);
+  border-radius: 2px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
 .card {
   border: 1px solid var(--color-line);
   border-radius: 2px;

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Logo from "./Logo";
+import CategoryLink from "./CategoryLink";
+import { phoneLink } from "@/lib/format";
 import styles from "./Footer.module.css";
 
 const EXPLORE = [
@@ -10,21 +12,14 @@ const EXPLORE = [
   { label: "Contact", href: "#contact" },
 ];
 
-const FLEET_LINKS = [
-  { label: "Luxury", href: "#fleet" },
-  { label: "SUV", href: "#fleet" },
-  { label: "Sports", href: "#fleet" },
-  { label: "Exotic", href: "#fleet" },
-  { label: "Economy", href: "#fleet" },
-];
+export default function Footer({ settings = {}, categories = [] }) {
+  // Only show social icons that have a link filled in, in Site Settings
+  const socials = [
+    { name: "Instagram", href: settings.instagramUrl, icon: "/icons/instagram.png" },
+    { name: "Facebook", href: settings.facebookUrl, icon: "/icons/facebook.png" },
+    { name: "YouTube", href: settings.youtubeUrl, icon: "/icons/youtube.png" },
+  ].filter((s) => s.href);
 
-const SOCIALS = [
-  { name: "Instagram", href: "#", icon: "/icons/instagram.png" },
-  { name: "Facebook", href: "#", icon: "/icons/facebook.png" },
-  { name: "YouTube", href: "#", icon: "/icons/youtube.png" },
-];
-
-export default function Footer() {
   return (
     <footer className={styles.footer} id="contact">
       <div className={styles.top}>
@@ -34,13 +29,22 @@ export default function Footer() {
             Elite Fleet makes renting a car in Dubai simple, fast and reliable — from everyday
             comfort to extraordinary performance.
           </p>
-          <div className={styles.social}>
-            {SOCIALS.map((s) => (
-              <a href={s.href} aria-label={s.name} key={s.name} className={styles.socialIcon}>
-                <Image src={s.icon} alt="" width={16} height={16} />
-              </a>
-            ))}
-          </div>
+          {socials.length > 0 && (
+            <div className={styles.social}>
+              {socials.map((s) => (
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.name}
+                  key={s.name}
+                  className={styles.socialIcon}
+                >
+                  <Image src={s.icon} alt="" width={16} height={16} />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.col}>
@@ -54,31 +58,39 @@ export default function Footer() {
 
         <div className={styles.col}>
           <p className={styles.colTitle}>Fleet</p>
-          {FLEET_LINKS.map((item) => (
-            <a href={item.href} key={item.label} className={styles.link}>
-              {item.label}
-            </a>
+          {categories.map((cat) => (
+            <CategoryLink key={cat._id} category={cat.name} className={styles.link}>
+              {cat.name}
+            </CategoryLink>
           ))}
         </div>
 
         <div className={styles.col}>
           <p className={styles.colTitle}>Contact</p>
-          <p className={styles.contactLine}>
-            <Image src="/icons/phone.png" alt="" width={16} height={16} />
-            +971 58 521 0105
-          </p>
-          <p className={styles.contactLine}>
-            <Image src="/icons/mail.png" alt="" width={16} height={16} />
-            hi@elitefleet.ae
-          </p>
-          <p className={styles.contactLine}>
-            <Image src="/icons/pin.png" alt="" width={16} height={16} />
-            Al Tayer Warehouses, Al Quoz Industrial First, UAE
-          </p>
-          <p className={styles.contactLine}>
-            <Image src="/icons/clock.png" alt="" width={16} height={16} />
-            8:00 AM – 10:00 PM
-          </p>
+          {settings.phone && (
+            <a href={phoneLink(settings.phone)} className={styles.contactLine}>
+              <Image src="/icons/phone.png" alt="" width={16} height={16} />
+              {settings.phone}
+            </a>
+          )}
+          {settings.email && (
+            <a href={`mailto:${settings.email}`} className={styles.contactLine}>
+              <Image src="/icons/mail.png" alt="" width={16} height={16} />
+              {settings.email}
+            </a>
+          )}
+          {settings.address && (
+            <p className={styles.contactLine}>
+              <Image src="/icons/pin.png" alt="" width={16} height={16} />
+              {settings.address}
+            </p>
+          )}
+          {settings.openingHours && (
+            <p className={styles.contactLine}>
+              <Image src="/icons/clock.png" alt="" width={16} height={16} />
+              {settings.openingHours}
+            </p>
+          )}
         </div>
       </div>
 
@@ -87,7 +99,7 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <p>© 2026 Elite Fleet. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Elite Fleet. All rights reserved.</p>
         <div className={styles.bottomLinks}>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms &amp; Conditions</a>

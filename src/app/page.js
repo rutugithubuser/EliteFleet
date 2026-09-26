@@ -11,24 +11,40 @@ import Testimonials from "@/components/Testimonials";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import { BookingProvider } from "@/context/BookingContext";
+import { sanityFetch } from "@/sanity/lib/client";
+import { HOME_QUERY } from "@/sanity/lib/queries";
 
-export default function Home() {
+// Rebuild this page with fresh Sanity content at most once every 60 seconds
+export const revalidate = 60;
+
+export default async function Home() {
+  const data = await sanityFetch({ query: HOME_QUERY });
+
+  const settings = data?.settings ?? {};
+  const home = data?.home ?? {};
+  const cars = data?.cars ?? [];
+  const categories = data?.categories ?? [];
+  const testimonials = data?.testimonials ?? [];
+  // Skip featured cars that were deleted after being picked
+  const featured = (home.featured ?? []).filter(Boolean);
+  const categoryNames = categories.map((c) => c.name);
+
   return (
     <BookingProvider>
-      <Navbar />
+      <Navbar settings={settings} />
       <main>
-        <Hero />
+        <Hero home={home} settings={settings} categoryNames={categoryNames} />
         <Trust />
-        <FleetGrid />
+        <FleetGrid cars={cars} categoryNames={categoryNames} />
         <EliteExperience />
-        <FeaturedVehicles />
+        <FeaturedVehicles cars={featured} />
         <WhyEliteFleet />
-        <HowItWorks />
-        <CategoryGrid />
-        <Testimonials />
-        <FinalCta />
+        <HowItWorks settings={settings} />
+        <CategoryGrid categories={categories} />
+        <Testimonials testimonials={testimonials} />
+        <FinalCta settings={settings} />
       </main>
-      <Footer />
+      <Footer settings={settings} categories={categories} />
     </BookingProvider>
   );
 }

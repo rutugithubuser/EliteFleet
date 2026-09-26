@@ -1,33 +1,31 @@
-import Image from "next/image";
 import { ArrowRightIcon } from "./icons/Icons";
+import SanityImage from "./SanityImage";
+import CategoryLink from "./CategoryLink";
 import styles from "./CategoryGrid.module.css";
 
-const CATEGORIES = [
-  { name: "Luxury", image: "/images/category/luxury.png", large: true },
-  { name: "Sports", image: "/images/category/sports.png" },
-  { name: "Exotic", image: "/images/category/exotic.png" },
-  { name: "SUV", image: "/images/category/suv.png" },
-  { name: "Economy", image: "/images/category/economy.png" },
-];
+// The design has room for 5 tiles: 1 large + 4 small
+const MAX_TILES = 5;
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ categories = [] }) {
+  const tiles = categories.filter((c) => c.image?.asset).slice(0, MAX_TILES);
+  if (tiles.length === 0) return null;
+
   return (
     <section className={styles.section}>
       <p className={styles.eyebrow}>Browse by Category</p>
       <h2 className={styles.heading}>A Car for Every Occasion</h2>
 
       <div className={styles.grid}>
-        {CATEGORIES.map((cat) => (
-          <a
-            href="#fleet"
-            key={cat.name}
-            className={`${styles.tile} ${cat.large ? styles.tileLarge : ""}`}
+        {tiles.map((cat, i) => (
+          <CategoryLink
+            key={cat._id}
+            category={cat.name}
+            className={`${styles.tile} ${i === 0 ? styles.tileLarge : ""}`}
           >
-            <Image
-              src={cat.image}
-              alt={cat.name}
-              fill
-              sizes={cat.large ? "(max-width: 600px) 100vw, 45vw" : "(max-width: 600px) 50vw, 22vw"}
+            <SanityImage
+              image={cat.image}
+              alt={cat.image?.alt || cat.name}
+              sizes={i === 0 ? "(max-width: 600px) 100vw, 45vw" : "(max-width: 600px) 50vw, 22vw"}
               className={styles.tileImage}
             />
             <span className={styles.tileOverlay} />
@@ -37,7 +35,7 @@ export default function CategoryGrid() {
                 Explore <ArrowRightIcon size={14} />
               </span>
             </span>
-          </a>
+          </CategoryLink>
         ))}
       </div>
     </section>
