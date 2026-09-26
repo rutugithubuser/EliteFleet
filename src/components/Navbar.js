@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 import { WhatsappIcon, MenuIcon, CloseIcon, ArrowRightIcon } from "./icons/Icons";
 import { useBooking } from "@/context/BookingContext";
 import { whatsappLink } from "@/lib/format";
@@ -69,6 +70,7 @@ export default function Navbar({ settings = {} }) {
         </nav>
 
         <div className={styles.actions}>
+          <ThemeToggle className={styles.iconButton} />
           {whatsapp && (
             <a
               href={whatsapp}
@@ -132,6 +134,7 @@ export default function Navbar({ settings = {} }) {
               WhatsApp&nbsp;&nbsp;{settings.phone}
             </a>
           )}
+          <ThemeToggle variant="row" className={styles.overlayTheme} />
           <p className={styles.overlayMeta}>
             {[settings.email, settings.openingHours].filter(Boolean).join("  ·  ")}
           </p>

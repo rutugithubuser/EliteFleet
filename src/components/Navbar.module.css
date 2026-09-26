@@ -14,9 +14,9 @@
 }
 
 .navbarSolid {
-  background: var(--color-white);
+  background: var(--color-surface);
   border-bottom-color: var(--color-line);
-  box-shadow: 0 8px 24px rgba(11, 11, 11, 0.06);
+  box-shadow: 0 8px 24px rgba(var(--shadow-color), 0.06);
 }
 
 .inner {
@@ -52,7 +52,7 @@
 }
 
 .link:hover {
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .dot {
@@ -63,7 +63,7 @@
 }
 
 .linkActive {
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .linkActive .dot {
@@ -85,11 +85,11 @@
   height: 44px;
   border: 1px solid var(--color-line-strong);
   border-radius: 2px;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .iconButton:hover {
-  border-color: var(--color-ink);
+  border-color: var(--color-text);
 }
 
 .bookButton {
@@ -98,8 +98,8 @@
   justify-content: center;
   height: 44px;
   padding: 0 20px;
-  background: var(--color-ink);
-  color: var(--color-white);
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
   border-radius: 2px;
   font-size: 14px;
   font-weight: 600;
@@ -117,7 +117,7 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 /* Tablet */
@@ -150,7 +150,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: var(--color-ink);
+  background: var(--color-band);
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
@@ -245,4 +245,18 @@
 .overlayMeta {
   font-size: 14px;
   color: var(--color-on-dark-secondary);
+}
+
+/* Night mode switch inside the mobile menu */
+.overlayTheme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 600;
 }

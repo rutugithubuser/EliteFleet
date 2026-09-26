@@ -26,7 +26,7 @@
 .title {
   font-size: 15px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .copy {
@@ -60,4 +60,9 @@
   .copy {
     font-size: 12px;
   }
+}
+
+/* Night mode: the icon files are a darker gold; brighten them to match the gold text */
+:global(:root[data-theme="dark"]) .icon {
+  filter: brightness(1.5);
 }

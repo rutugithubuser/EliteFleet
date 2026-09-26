@@ -1,12 +1,30 @@
+/* ---------- Colours ----------
+   Two kinds of colour settings:
+   1. Fixed: the same in light and night mode (brand gold, pure black/white
+      used on top of photos and on the dark sections).
+   2. Theme: switch between light and night mode (defined twice below). */
+
 :root {
-  --color-bg: #f7f7f5;
+  /* Fixed */
   --color-ink: #0b0b0b;
   --color-white: #ffffff;
+  --color-gold: #c6a15b;
+  --color-on-dark-secondary: #b4b4ae;
+
+  /* Theme: light (default) */
+  --color-bg: #f7f7f5; /* page background */
+  --color-surface: #ffffff; /* cards, booking bar, panels */
+  --color-text: #0b0b0b; /* main text */
+  --color-text-secondary: #5c5c58; /* paragraphs */
+  --color-text-muted: #70706b; /* small labels */
+  --color-accent: #8a6a2e; /* gold text (eyebrows, brand names) */
   --color-line: #e3e2dd;
   --color-line-strong: #cfcec8;
-  --color-text-secondary: #5c5c58;
-  --color-on-dark-secondary: #b4b4ae;
-  --color-gold: #c6a15b;
+  --color-button-bg: #0b0b0b; /* main black buttons */
+  --color-button-text: #ffffff;
+  --color-band: #0b0b0b; /* dark sections: Signature Collection, footer, mobile menu */
+  --shadow-color: 11, 11, 11; /* used as rgba(var(--shadow-color), 0.1) */
+  color-scheme: light;
 
   --font-body: "Manrope", Arial, Helvetica, sans-serif;
   --font-display: "Playfair Display", Georgia, serif;
@@ -21,6 +39,37 @@
   --duration-fast: 0.25s;
   --duration-base: 0.7s;
   --stagger: 90ms;
+}
+
+/* Theme: night. Set by the toggle (data-theme="dark" on <html>);
+   the small script in layout.js picks it before the page is drawn. */
+:root[data-theme="dark"] {
+  --color-bg: #0f0f0e;
+  --color-surface: #1a1a18;
+  --color-text: #f3f2ee;
+  --color-text-secondary: #b0afa8;
+  --color-text-muted: #8f8e87;
+  --color-accent: #d3b06d;
+  --color-line: #2b2b28;
+  --color-line-strong: #43423e;
+  --color-button-bg: #f3f2ee;
+  --color-button-text: #0b0b0b;
+  --color-band: #171715;
+  --shadow-color: 0, 0, 0;
+  color-scheme: dark;
+}
+
+/* Smooth colour change when switching modes (added only while switching,
+   so it doesn't slow down hover effects the rest of the time) */
+:root.theme-switching,
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    fill 0.35s ease !important;
 }
 
 * {
@@ -45,7 +94,7 @@ html {
 
 body {
   background: var(--color-bg);
-  color: var(--color-ink);
+  color: var(--color-text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }

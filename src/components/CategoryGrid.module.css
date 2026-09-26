@@ -10,14 +10,14 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .heading {
   margin-top: 12px;
   font-size: 32px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .grid {

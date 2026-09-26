@@ -51,8 +51,9 @@ export const homePageType = defineType({
             }),
             defineField({
               name: "wideImage",
-              title: "Wide photo",
-              description: "A wide, landscape photo for the hero",
+              title: "Wide photo (optional)",
+              description:
+                "Leave empty to use the car's own photo. Only add one if you want a different, wider shot here.",
               type: "image",
               options: { hotspot: true },
               fields: [
@@ -60,14 +61,13 @@ export const homePageType = defineType({
                   name: "alt",
                   title: "Photo description",
                   type: "string",
-                  validation: (Rule) => Rule.required(),
                 }),
               ],
-              validation: (Rule) => Rule.required(),
             }),
           ],
           preview: {
-            select: { title: "car.name", media: "wideImage" },
+            select: { title: "car.name", media: "wideImage", carImage: "car.image" },
+            prepare: ({ title, media, carImage }) => ({ title, media: media ?? carImage }),
           },
         }),
       ],
