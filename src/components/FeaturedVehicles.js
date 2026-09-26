@@ -6,6 +6,9 @@ import SanityImage from "./SanityImage";
 import { carPriceLabel } from "@/lib/format";
 import styles from "./FeaturedVehicles.module.css";
 import Reveal from "./Reveal";
+import Link from "next/link";
+import { LINKS } from "@/lib/links";
+import MaskText from "./MaskText";
 
 export default function FeaturedVehicles({ cars = [] }) {
   const trackRef = useRef(null);
@@ -28,13 +31,15 @@ export default function FeaturedVehicles({ cars = [] }) {
       <Reveal className={styles.header}>
         <div>
           <p className={styles.eyebrow}>Featured Vehicles</p>
-          <h2 className={styles.heading}>The Signature Collection</h2>
+          <h2 className={styles.heading}>
+            <MaskText lines="The Signature Collection" />
+          </h2>
           <p className={styles.sub}>Hand-picked icons from the Elite Fleet garage.</p>
         </div>
         <div className={styles.controls}>
-          <a href="#fleet" className={styles.viewAll}>
+          <Link href={LINKS.fleet} className={styles.viewAll}>
             View All Fleet <ArrowRightIcon size={16} />
-          </a>
+          </Link>
           <button type="button" className={styles.arrowBtn} onClick={() => go(-1)} aria-label="Previous">
             <ChevronLeftIcon size={18} />
           </button>
@@ -61,9 +66,9 @@ export default function FeaturedVehicles({ cars = [] }) {
                     <p className={styles.cardModel}>{car.name}</p>
                     <p className={styles.cardPrice}>{carPriceLabel(car)}</p>
                   </div>
-                  <a href="#fleet" className={styles.cardArrow} aria-label={`View ${car.name}`}>
+                  <Link href={LINKS.car(car.slug)} className={styles.cardArrow} aria-label={`View ${car.name}`}>
                     <ArrowRightIcon size={16} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

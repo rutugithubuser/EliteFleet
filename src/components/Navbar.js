@@ -1,22 +1,26 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 import { WhatsappIcon, MenuIcon, CloseIcon, ArrowRightIcon } from "./icons/Icons";
 import { useBooking } from "@/context/BookingContext";
 import { whatsappLink } from "@/lib/format";
+import { LINKS as ROUTES } from "@/lib/links";
 import styles from "./Navbar.module.css";
 
+// isActive: which page makes this link show as the current one
 const LINKS = [
-  { label: "Home", href: "#top", active: true },
-  { label: "Fleet", href: "#fleet" },
-  { label: "Luxury", href: "#fleet", category: "Luxury" },
-  { label: "SUV", href: "#fleet", category: "SUV" },
-  { label: "Sports", href: "#fleet", category: "Sports" },
-  { label: "About", href: "#about" },
-  { label: "Chauffeur", href: "#contact" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: ROUTES.home, isActive: (path) => path === "/" },
+  { label: "Fleet", href: ROUTES.fleetSection, isActive: (path) => path.startsWith("/fleet") },
+  { label: "Luxury", href: ROUTES.fleetSection, category: "Luxury" },
+  { label: "SUV", href: ROUTES.fleetSection, category: "SUV" },
+  { label: "Sports", href: ROUTES.fleetSection, category: "Sports" },
+  { label: "About", href: ROUTES.about },
+  { label: "Chauffeur", href: ROUTES.chauffeur, isActive: (path) => path.startsWith("/chauffeur") },
+  { label: "Contact", href: ROUTES.contact },
 ];
 
 // True once the page is scrolled more than 80px (always false while pre-building on the server)
@@ -37,6 +41,7 @@ export default function Navbar({ settings = {} }) {
   const [open, setOpen] = useState(false);
   const { setCategory } = useBooking();
   const whatsapp = whatsappLink(settings.whatsappNumber);
+  const pathname = usePathname() ?? "/";
 
   function handleNavClick(link) {
     if (link.category) setCategory(link.category);
@@ -46,26 +51,26 @@ export default function Navbar({ settings = {} }) {
   return (
     <header className={`${styles.navbar} ${scrolled ? styles.navbarSolid : ""}`}>
       <div className={styles.inner}>
-        <a
-          href="#top"
+        <Link
+          href={ROUTES.home}
           className={styles.logoLink}
           aria-label="Elite Fleet home"
           onClick={() => handleNavClick({})}
         >
           <Logo height={44} />
-        </a>
+        </Link>
 
         <nav className={styles.links} aria-label="Primary">
           {LINKS.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
-              className={`${styles.link} ${link.active ? styles.linkActive : ""}`}
+              className={`${styles.link} ${link.isActive?.(pathname) ? styles.linkActive : ""}`}
               onClick={() => handleNavClick(link)}
             >
               {link.label}
               <span className={styles.dot} />
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -82,9 +87,9 @@ export default function Navbar({ settings = {} }) {
               <WhatsappIcon />
             </a>
           )}
-          <a href="#fleet" className={styles.bookButton} onClick={() => handleNavClick({})}>
+          <Link href={ROUTES.booking} className={styles.bookButton} onClick={() => handleNavClick({})}>
             Book Now
-          </a>
+          </Link>
           <button
             type="button"
             className={styles.menuButton}
@@ -111,24 +116,24 @@ export default function Navbar({ settings = {} }) {
 
         <div className={styles.overlayLinks}>
           {LINKS.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
-              className={`${styles.overlayLink} ${link.active ? styles.overlayLinkActive : ""}`}
+              className={`${styles.overlayLink} ${link.isActive?.(pathname) ? styles.overlayLinkActive : ""}`}
               onClick={() => handleNavClick(link)}
             >
               {link.label}
               <ArrowRightIcon size={18} />
-            </a>
+            </Link>
           ))}
         </div>
 
         <div className={styles.overlaySpacer} />
 
         <div className={styles.overlayActions}>
-          <a href="#fleet" className={styles.overlayBook} onClick={() => handleNavClick({})}>
+          <Link href={ROUTES.booking} className={`${styles.overlayBook} shimmer`} onClick={() => handleNavClick({})}>
             Book Now <ArrowRightIcon size={18} />
-          </a>
+          </Link>
           {whatsapp && (
             <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.overlayWhatsapp}>
               WhatsApp&nbsp;&nbsp;{settings.phone}

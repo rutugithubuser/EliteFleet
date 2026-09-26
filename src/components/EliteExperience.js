@@ -2,6 +2,10 @@ import Image from "next/image";
 import { ArrowRightIcon } from "./icons/Icons";
 import styles from "./EliteExperience.module.css";
 import Reveal from "./Reveal";
+import Link from "next/link";
+import { LINKS } from "@/lib/links";
+import MaskText from "./MaskText";
+import Parallax from "./Parallax";
 
 const POINTS = [
   {
@@ -25,21 +29,25 @@ export default function EliteExperience() {
   return (
     <section className={styles.section} id="about">
       <Reveal className={styles.imageWrap}>
-        <Image
-          src="/images/elite-experience-dawn.png"
-          alt="Rolls-Royce Dawn — In the Fleet"
-          fill
-          sizes="(max-width: 900px) 100vw, 50vw"
-          className={styles.image}
-        />
+        <Parallax>
+          <Image
+            src="/images/elite-experience-dawn.png"
+            alt="White Rolls-Royce Dawn convertible parked beside green plants"
+            fill
+            sizes="(max-width: 900px) 100vw, 50vw"
+            className={styles.image}
+          />
+        </Parallax>
+        <p className={styles.caption}>
+          <span className={styles.captionLabel}>In the Fleet</span>
+          <span className={styles.captionName}>Rolls-Royce Dawn</span>
+        </p>
       </Reveal>
 
       <Reveal stagger delay={0.15} className={styles.content}>
         <p className={styles.eyebrow}>The Elite Experience</p>
         <h2 className={styles.heading}>
-          More Than a
-          <br />
-          Rental.
+          <MaskText lines={["More Than a", "Rental."]} />
         </h2>
         <p className={styles.copy}>
           Elite Fleet makes renting a car in Dubai simple, fast and reliable. Choose from a broad
@@ -60,9 +68,9 @@ export default function EliteExperience() {
           ))}
         </ol>
 
-        <a href="#fleet" className={styles.cta}>
+        <Link href={LINKS.fleetSection} className={styles.cta}>
           Discover Elite Fleet <ArrowRightIcon size={16} />
-        </a>
+        </Link>
       </Reveal>
     </section>
   );

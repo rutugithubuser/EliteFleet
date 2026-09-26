@@ -1,18 +1,20 @@
 import Image from "next/image";
+import Link from "next/link";
 import Logo from "./Logo";
 import CategoryLink from "./CategoryLink";
 import { phoneLink } from "@/lib/format";
+import { LINKS } from "@/lib/links";
 import styles from "./Footer.module.css";
 
 const EXPLORE = [
-  { label: "Home", href: "#top" },
-  { label: "Fleet", href: "#fleet" },
-  { label: "About", href: "#about" },
-  { label: "Chauffeur", href: "#contact" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: LINKS.home },
+  { label: "Fleet", href: LINKS.fleetSection },
+  { label: "About", href: LINKS.about },
+  { label: "Chauffeur", href: LINKS.chauffeur },
+  { label: "Contact", href: LINKS.contact },
 ];
 
-export default function Footer({ settings = {}, categories = [] }) {
+export default function Footer({ settings = {}, categories = [], legalPages = [] }) {
   // Only show social icons that have a link filled in, in Site Settings
   const socials = [
     { name: "Instagram", href: settings.instagramUrl, icon: "/icons/instagram.png" },
@@ -50,9 +52,9 @@ export default function Footer({ settings = {}, categories = [] }) {
         <div className={styles.col}>
           <p className={styles.colTitle}>Explore</p>
           {EXPLORE.map((item) => (
-            <a href={item.href} key={item.label} className={styles.link}>
+            <Link href={item.href} key={item.label} className={styles.link}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -100,11 +102,16 @@ export default function Footer({ settings = {}, categories = [] }) {
 
       <div className={styles.bottom}>
         <p>© {new Date().getFullYear()} Elite Fleet. All rights reserved.</p>
-        <div className={styles.bottomLinks}>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms &amp; Conditions</a>
-          <a href="#">FAQ</a>
-        </div>
+        {/* Pages added in Studio → Legal pages (Privacy Policy, Terms, FAQ...) */}
+        {legalPages.length > 0 && (
+          <div className={styles.bottomLinks}>
+            {legalPages.map((page) => (
+              <Link href={LINKS.legal(page.slug)} key={page._id}>
+                {page.title}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </footer>
   );

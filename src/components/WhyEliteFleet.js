@@ -2,6 +2,9 @@ import Image from "next/image";
 import { CarIcon, TagIcon } from "./icons/Icons";
 import styles from "./WhyEliteFleet.module.css";
 import Reveal from "./Reveal";
+import Link from "next/link";
+import { LINKS } from "@/lib/links";
+import MaskText from "./MaskText";
 
 const FEATURES = [
   {
@@ -31,13 +34,15 @@ export default function WhyEliteFleet() {
     <section className={styles.section}>
       <Reveal className={styles.intro}>
         <p className={styles.eyebrow}>Why Elite Fleet</p>
-        <h2 className={styles.heading}>Built Around Your Journey.</h2>
+        <h2 className={styles.heading}>
+          <MaskText lines="Built Around Your Journey." />
+        </h2>
         <p className={styles.copy}>
           Everything you need for a smooth rental in Dubai — without the fine print.
         </p>
-        <a href="#about" className={styles.cta}>
+        <Link href={LINKS.about} className={styles.cta}>
           Read about us →
-        </a>
+        </Link>
       </Reveal>
 
       <Reveal stagger delay={0.1} className={styles.grid}>

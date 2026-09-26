@@ -6,6 +6,9 @@ import Reveal from "./Reveal";
 import { useBooking } from "@/context/BookingContext";
 import { carPriceLabel, carSpecs, formatAed } from "@/lib/format";
 import styles from "./FleetGrid.module.css";
+import Link from "next/link";
+import { LINKS } from "@/lib/links";
+import MaskText from "./MaskText";
 
 // How many cars the grid shows at once
 const MAX_VISIBLE = 6;
@@ -22,12 +25,14 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
       <Reveal className={styles.header}>
         <div>
           <p className={styles.eyebrow}>Explore Our Fleet</p>
-          <h2 className={styles.heading}>Find Your Perfect Drive</h2>
+          <h2 className={styles.heading}>
+            <MaskText lines="Find Your Perfect Drive" />
+          </h2>
           <p className={styles.sub}>From everyday comfort to extraordinary performance.</p>
         </div>
-        <a href="#fleet" className={styles.viewAll}>
+        <Link href={LINKS.fleet} className={styles.viewAll}>
           View All Fleet <ArrowRightIcon size={16} />
-        </a>
+        </Link>
       </Reveal>
 
       <div className={styles.tabs}>
@@ -79,12 +84,12 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
                     )}
                   </p>
                   <div className={styles.actions}>
-                    <a href="#" className={styles.detailsBtn}>
+                    <Link href={LINKS.car(car.slug)} className={styles.detailsBtn}>
                       View Details
-                    </a>
-                    <a href="#" className={styles.bookBtn}>
+                    </Link>
+                    <Link href={LINKS.bookCar(car.slug)} className={styles.bookBtn}>
                       Book Now
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -94,12 +99,12 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
       )}
 
       <div className={styles.moreWrap}>
-        <a href="#fleet" className={`${styles.moreBtn} ${styles.moreBtnWide}`}>
+        <Link href={LINKS.fleet} className={`${styles.moreBtn} ${styles.moreBtnWide}`}>
           View All Fleet <ArrowRightIcon size={16} />
-        </a>
-        <a href="#fleet" className={`${styles.moreBtn} ${styles.moreBtnMobile}`}>
+        </Link>
+        <Link href={LINKS.fleet} className={`${styles.moreBtn} ${styles.moreBtnMobile}`}>
           View All {cars.length} Cars <ArrowRightIcon size={16} />
-        </a>
+        </Link>
         <p className={styles.moreNote}>
           Showing {visible.length} of {matching.length}{" "}
           {matching.length === 1 ? "vehicle" : "vehicles"}. Prices per day as listed on elitefleet.ae.
