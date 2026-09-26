@@ -27,7 +27,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .heading {
@@ -35,7 +35,7 @@
   font-size: 40px;
   font-weight: 600;
   line-height: 1.15;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .copy {
@@ -75,7 +75,7 @@
 .pointTitle {
   font-size: 15px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .pointCopy {
@@ -98,11 +98,11 @@
   border-radius: 2px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .cta:hover {
-  border-color: var(--color-ink);
+  border-color: var(--color-text);
 }
 
 @media (max-width: 1180px) {

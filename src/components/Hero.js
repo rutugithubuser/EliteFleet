@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import {
   CalendarIcon,
@@ -129,11 +129,49 @@ function BookingBar({ locations, categoryNames }) {
   );
 }
 
+// How long each car stays on screen before the carousel moves on
+const AUTOPLAY_MS = 5000;
+
+// True if the visitor has asked their device to reduce motion
+const subscribeToMotionPref = (callback) => {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+};
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    subscribeToMotionPref,
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false
+  );
+}
+
+// True while the browser tab is in the background
+const subscribeToVisibility = (callback) => {
+  document.addEventListener("visibilitychange", callback);
+  return () => document.removeEventListener("visibilitychange", callback);
+};
+function usePageHidden() {
+  return useSyncExternalStore(subscribeToVisibility, () => document.hidden, () => false);
+}
+
 export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
-  const slides = (home.heroSlides ?? []).filter((s) => s?.car);
+  // A slide uses its own wide photo if one was uploaded, otherwise the car's photo
+  const slides = (home.heroSlides ?? [])
+    .filter((s) => s?.car)
+    .map((s) => ({ ...s, image: s.image?.asset ? s.image : s.car.image }))
+    .filter((s) => s.image?.asset);
   const [index, setIndex] = useState(0);
   const slide = slides[index];
   const hasMultipleSlides = slides.length > 1;
+
+  // Auto-play pauses while hovered, while a control has keyboard focus,
+  // while the tab is in the background, and for visitors who prefer less motion
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const pageHidden = usePageHidden();
+  const reducedMotion = usePrefersReducedMotion();
+  const autoplay = hasMultipleSlides && !hovered && !focused && !pageHidden && !reducedMotion;
 
   const label = home.heroLabel || DEFAULTS.heroLabel;
   const headline = home.heroHeadline || DEFAULTS.heroHeadline;
@@ -146,6 +184,34 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
   function go(dir) {
     setHasSwitched(true);
     setIndex((i) => (i + dir + slides.length) % slides.length);
+  }
+
+  function goTo(i) {
+    setHasSwitched(true);
+    setIndex(i);
+  }
+
+  // Move to the next car after AUTOPLAY_MS. Restarts whenever the slide changes,
+  // so a manual click always gets a full 5 seconds before the next auto move.
+  useEffect(() => {
+    if (!autoplay) return;
+    const timer = setTimeout(() => {
+      setHasSwitched(true);
+      setIndex((i) => (i + 1) % slides.length);
+    }, AUTOPLAY_MS);
+    return () => clearTimeout(timer);
+  }, [autoplay, index, slides.length]);
+
+  // Swipe left/right on touch screens
+  const touchStartX = useRef(null);
+  function onTouchStart(e) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+  function onTouchEnd(e) {
+    if (touchStartX.current == null || !hasMultipleSlides) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
   }
 
   return (
@@ -183,7 +249,20 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
       </div>
 
       <div className={styles.stageWrap}>
-        <div className={styles.stage}>
+        <div
+          className={styles.stage}
+          aria-roledescription={hasMultipleSlides ? "carousel" : undefined}
+          aria-label={hasMultipleSlides ? "Featured cars" : undefined}
+          onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
+          onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
+          // Only keyboard focus pauses auto-play (a tap on mobile also "focuses" a button)
+          onFocus={(e) => e.target.matches(":focus-visible") && setFocused(true)}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false);
+          }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           {slides.length > 0 ? (
             // All slides are stacked; only the active one is visible, so switching crossfades
             slides.map((s, i) => (
@@ -263,6 +342,22 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
               >
                 <ChevronRightIcon size={18} />
               </button>
+            </div>
+          )}
+
+          {/* Dots: shown on mobile, where the arrows are hidden */}
+          {hasMultipleSlides && (
+            <div className={styles.dots}>
+              {slides.map((s, i) => (
+                <button
+                  key={s._key}
+                  type="button"
+                  className={`${styles.dot} ${i === index ? styles.dotActive : ""}`}
+                  aria-label={`Show ${s.car.name}`}
+                  aria-current={i === index}
+                  onClick={() => goTo(i)}
+                />
+              ))}
             </div>
           )}
         </div>

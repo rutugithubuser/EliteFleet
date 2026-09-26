@@ -16,14 +16,14 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .heading {
   margin-top: 14px;
   font-size: 32px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .sub {
@@ -65,8 +65,8 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--color-ink);
-  color: var(--color-white);
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
   font-size: 12px;
   font-weight: 600;
 }
@@ -75,7 +75,7 @@
   margin-top: 18px;
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .copy {
@@ -91,7 +91,7 @@
   gap: 10px;
   margin-top: 48px;
   padding: 12px 22px;
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: 2px;
   font-size: 13px;
@@ -99,7 +99,7 @@
 }
 
 .whatsappPill strong {
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 @media (max-width: 1180px) {

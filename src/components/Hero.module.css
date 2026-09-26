@@ -19,7 +19,7 @@
   font-weight: 700;
   letter-spacing: 2.16px;
   text-transform: uppercase;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .eyebrowLine {
@@ -51,14 +51,14 @@
   font-size: 132px;
   line-height: 1;
   letter-spacing: -4px;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .headline em {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 500;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .copyRow {
@@ -99,8 +99,8 @@
 }
 
 .primaryCta {
-  background: var(--color-ink);
-  color: var(--color-white);
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
 }
 
 .primaryCta:hover {
@@ -108,13 +108,13 @@
 }
 
 .secondaryCta {
-  border: 1px solid var(--color-ink);
-  color: var(--color-ink);
+  border: 1px solid var(--color-text);
+  color: var(--color-text);
 }
 
 .secondaryCta:hover {
-  background: var(--color-ink);
-  color: var(--color-white);
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
 }
 
 /* AFTER */
@@ -155,7 +155,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: var(--color-white);
+  background: var(--color-surface);
   border-radius: 2px;
   padding: 14px 20px;
 }
@@ -171,13 +171,13 @@
   font-weight: 700;
   letter-spacing: 2.16px;
   text-transform: uppercase;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .nowShowingModel {
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .divider {
@@ -196,12 +196,12 @@
 .priceValue {
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .priceUnit {
   font-size: 14px;
-  color: #70706b;
+  color: var(--color-text-muted);
 }
 
 .slideControls {
@@ -258,10 +258,10 @@
   bottom: 24px;
   display: flex;
   align-items: center;
-  background: var(--color-white);
+  background: var(--color-surface);
   border-radius: 2px;
   padding: 8px;
-  box-shadow: 0 24px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 24px 32px rgba(var(--shadow-color), 0.1);
 }
 
 .field {
@@ -290,7 +290,7 @@
 
 .fieldIcon {
   flex-shrink: 0;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .fieldText {
@@ -305,14 +305,14 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 1.2px;
-  color: #70706b;
+  color: var(--color-text-muted);
   white-space: nowrap;
 }
 
 .fieldValue {
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -325,7 +325,7 @@
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
   width: 100%;
   cursor: pointer;
 }
@@ -336,7 +336,7 @@
 
 .fieldChevron {
   flex-shrink: 0;
-  color: var(--color-ink);
+  color: var(--color-text);
   transition: transform 0.2s ease;
 }
 
@@ -354,10 +354,10 @@
   max-width: 320px;
   max-height: 280px;
   overflow-y: auto;
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: 2px;
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 16px 32px rgba(var(--shadow-color), 0.14);
   padding: 6px;
 }
 
@@ -366,7 +366,7 @@
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
-  color: var(--color-ink);
+  color: var(--color-text);
   text-align: left;
   border-radius: 2px;
   white-space: normal;
@@ -379,7 +379,7 @@
 .dropdownOptionActive {
   background: var(--color-bg);
   font-weight: 600;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .searchButton {
@@ -633,5 +633,52 @@
 @media (prefers-reduced-motion: no-preference) {
   .nowShowing.noDelay {
     animation-delay: 0s;
+  }
+}
+
+/* ---------- Carousel dots (mobile only; arrows are used on larger screens) ---------- */
+
+.dots {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .dots {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    background: rgba(11, 11, 11, 0.45);
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    transition:
+      width 0.3s var(--ease-out),
+      background-color 0.3s var(--ease-out);
+  }
+
+  .dotActive {
+    width: 18px;
+    background: var(--color-white);
+  }
+
+  /* Bigger invisible tap area around each small dot */
+  .dot {
+    position: relative;
+  }
+
+  .dot::after {
+    content: "";
+    position: absolute;
+    inset: -10px -4px;
   }
 }

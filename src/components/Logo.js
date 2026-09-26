@@ -6,7 +6,7 @@ export default function Logo({ className, height = 44, dark = false }) {
       <Image
         src="/images/branding/logo.png"
         alt="Elite Fleet — Car Rental"
-        width={168}
+        width={190}
         height={55}
         style={{ height: "100%", width: "auto", objectFit: "contain" }}
         loading="eager"

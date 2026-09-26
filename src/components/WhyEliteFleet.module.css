@@ -13,7 +13,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .heading {
@@ -21,7 +21,7 @@
   font-size: 32px;
   font-weight: 600;
   line-height: 1.2;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .copy {
@@ -36,8 +36,8 @@
   margin-top: 20px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-ink);
-  border-bottom: 1px solid var(--color-ink);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-text);
   padding-bottom: 2px;
 }
 
@@ -48,14 +48,14 @@
 }
 
 .icon {
-  color: #8a6a2e;
+  color: var(--color-accent);
 }
 
 .title {
   margin-top: 14px;
   font-size: 16px;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-text);
 }
 
 .itemCopy {
@@ -87,4 +87,9 @@
     grid-template-columns: 1fr;
     gap: 28px;
   }
+}
+
+/* Night mode: the icon image files are a darker gold; brighten them to match */
+:global(:root[data-theme="dark"]) img.icon {
+  filter: brightness(1.5);
 }
