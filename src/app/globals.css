@@ -1,0 +1,300 @@
+/* ---------- Colours ----------
+   Two kinds of colour settings:
+   1. Fixed: the same in light and night mode (brand gold, pure black/white
+      used on top of photos and on the dark sections).
+   2. Theme: switch between light and night mode (defined twice below). */
+
+:root {
+  /* Fixed */
+  --color-ink: #0b0b0b;
+  --color-white: #ffffff;
+  --color-gold: #c6a15b;
+  --color-on-dark-secondary: #b4b4ae;
+
+  /* Theme: light (default) */
+  --color-bg: #f7f7f5; /* page background */
+  --color-surface: #ffffff; /* cards, booking bar, panels */
+  --color-text: #0b0b0b; /* main text */
+  --color-text-secondary: #5c5c58; /* paragraphs */
+  --color-text-muted: #70706b; /* small labels */
+  --color-accent: #8a6a2e; /* gold text (eyebrows, brand names) */
+  --color-line: #e3e2dd;
+  --color-line-strong: #cfcec8;
+  --color-button-bg: #0b0b0b; /* main black buttons */
+  --color-button-text: #ffffff;
+  --color-band: #0b0b0b; /* dark sections: Signature Collection, footer, mobile menu */
+  --shadow-color: 11, 11, 11; /* used as rgba(var(--shadow-color), 0.1) */
+  color-scheme: light;
+
+  --font-body: "Manrope", Arial, Helvetica, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+
+  --container-max: 1440px;
+  --space-desktop: 64px;
+  --space-tablet: 40px;
+  --space-mobile: 20px;
+
+  /* Motion: one easing curve and a few durations used everywhere */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.25s;
+  --duration-base: 0.7s;
+  --stagger: 90ms;
+}
+
+/* Theme: night. Set by the toggle (data-theme="dark" on <html>);
+   the small script in layout.js picks it before the page is drawn. */
+:root[data-theme="dark"] {
+  --color-bg: #0f0f0e;
+  --color-surface: #1a1a18;
+  --color-text: #f3f2ee;
+  --color-text-secondary: #b0afa8;
+  --color-text-muted: #8f8e87;
+  --color-accent: #d3b06d;
+  --color-line: #2b2b28;
+  --color-line-strong: #43423e;
+  --color-button-bg: #f3f2ee;
+  --color-button-text: #0b0b0b;
+  --color-band: #171715;
+  --shadow-color: 0, 0, 0;
+  color-scheme: dark;
+}
+
+/* Smooth colour change when switching modes (added only while switching,
+   so it doesn't slow down hover effects the rest of the time) */
+:root.theme-switching,
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    fill 0.35s ease !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 100px;
+}
+
+@media (max-width: 600px) {
+  [id] {
+    scroll-margin-top: 84px;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-desktop);
+}
+
+@media (max-width: 1180px) {
+  .container {
+    padding: 0 var(--space-tablet);
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 var(--space-mobile);
+  }
+}
+
+/* ---------- Scroll reveal (used by the <Reveal> component) ----------
+   Content is only hidden when JavaScript is running and the visitor
+   hasn't asked their device to reduce motion. Without JavaScript,
+   or with "reduce motion" on, everything simply shows as normal. */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  /* Hidden until scrolled into view */
+  [data-reveal="fade"]:not([data-visible]),
+  [data-reveal="stagger"]:not([data-visible]) > * {
+    opacity: 0;
+  }
+
+  /* One block fades up */
+  [data-reveal="fade"][data-visible] {
+    animation: reveal-up var(--duration-base) var(--ease-out) backwards;
+    animation-delay: var(--reveal-delay, 0s);
+  }
+
+  /* Each child fades up, one after another */
+  [data-reveal="stagger"][data-visible] > * {
+    animation: reveal-up var(--duration-base) var(--ease-out) backwards;
+    animation-delay: calc(var(--reveal-delay, 0s) + var(--i, 0) * var(--stagger));
+  }
+
+  [data-reveal="stagger"] > :nth-child(2) { --i: 1; }
+  [data-reveal="stagger"] > :nth-child(3) { --i: 2; }
+  [data-reveal="stagger"] > :nth-child(4) { --i: 3; }
+  [data-reveal="stagger"] > :nth-child(5) { --i: 4; }
+  [data-reveal="stagger"] > :nth-child(6) { --i: 5; }
+  [data-reveal="stagger"] > :nth-child(n + 7) { --i: 6; }
+}
+
+/* ---------- Masked headings (used by the <MaskText> component) ----------
+   Each line sits in a box with a hidden overflow and slides up into it
+   when its <Reveal> section comes into view. */
+
+.mask-line {
+  display: block;
+  overflow: hidden;
+  /* room for letters that hang below the line (g, y, p) */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.mask-line > span {
+  display: block;
+}
+
+@keyframes mask-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal]:not([data-visible]) .mask-line > span {
+    transform: translateY(110%);
+  }
+
+  [data-reveal][data-visible] .mask-line > span {
+    animation: mask-up 0.9s var(--ease-out) backwards;
+    animation-delay: calc(
+      var(--reveal-delay, 0s) + var(--i, 0) * var(--stagger) + var(--line, 0) * 0.12s + 0.05s
+    );
+  }
+}
+
+/* ---------- Parallax (used by the <Parallax> component) ---------- */
+
+.parallax {
+  position: absolute;
+  inset: -12% 0;
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
+}
+
+/* ---------- Gold shimmer: a soft light that sweeps across gold buttons ---------- */
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer::after {
+    animation: shimmer 5s var(--ease-out) 2s infinite;
+  }
+
+  @media (hover: hover) {
+    .shimmer:hover::after {
+      animation: shimmer-once 0.9s var(--ease-out);
+    }
+  }
+}
+
+@keyframes shimmer-once {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  22%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* Respect the visitor's "reduce motion" setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

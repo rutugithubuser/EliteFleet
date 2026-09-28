@@ -1,0 +1,221 @@
+/* Overlay: fixed, full screen. Hidden with transform + visibility so the
+   panel can slide in/out smoothly instead of popping in and out. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  /* Above the fixed navbar (100) and the mobile menu overlay (200) */
+  z-index: 300;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlayOpen {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 11, 11, 0.45);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.overlayOpen .backdrop {
+  opacity: 1;
+}
+
+/* Desktop: slide-over panel on the right edge */
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, 100vw);
+  height: 100%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: -24px 0 48px rgba(var(--shadow-color), 0.16);
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.overlayOpen .panel {
+  transform: none;
+}
+
+.handle {
+  width: 44px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 999px;
+  background: var(--color-line-strong);
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px 4px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  color: var(--color-text);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 16px 24px 24px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.section + .section {
+  margin-top: 26px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.pillGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 2px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.pillOn {
+  background: var(--color-button-bg);
+  border-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  font-weight: 600;
+}
+
+.footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-line);
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.clear,
+.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.clear {
+  flex: 0 0 auto;
+  min-width: 104px;
+  padding: 0 20px;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-text);
+}
+
+.show {
+  flex: 1 1 auto;
+  padding: 0 20px;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+}
+
+@media (hover: hover) {
+  .close:hover {
+    background: rgba(var(--shadow-color), 0.06);
+  }
+  .pill:hover {
+    border-color: var(--color-text);
+  }
+  .pillOn:hover {
+    border-color: var(--color-button-bg);
+  }
+  .clear:hover {
+    border-color: var(--color-text);
+  }
+  .show:hover {
+    opacity: 0.88;
+  }
+}
+
+/* Mobile: bottom sheet that slides up */
+@media (max-width: 768px) {
+  .panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -24px 48px rgba(var(--shadow-color), 0.2);
+    transform: translateY(100%);
+  }
+
+  .overlayOpen .panel {
+    transform: none;
+  }
+
+  .header {
+    padding: 12px 20px 4px;
+  }
+
+  .body {
+    padding: 16px 20px 20px;
+  }
+
+  .footer {
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+  }
+}
