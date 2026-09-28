@@ -82,6 +82,54 @@ export function WhatsappIcon(props) {
   );
 }
 
+export function MailIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <rect x="3" y="5.5" width="18" height="13" rx="1.5" />
+      <path d="m3.8 7 7.3 5.3a1.6 1.6 0 0 0 1.8 0L20.2 7" />
+    </svg>
+  );
+}
+
+export function ArrowUpRightIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <path d="M7 17 17 7M8.5 7H17v8.5" />
+    </svg>
+  );
+}
+
+export function InstagramIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 16} height={props.size || 16} {...base} {...props}>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function FacebookIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 16} height={props.size || 16} {...base} {...props}>
+      <path
+        d="M13.5 21v-7.6h2.5l.5-3h-3V8.5c0-.9.3-1.5 1.6-1.5h1.5V4.3c-.3 0-1.3-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H8.2v3h2.2V21h3.1Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </svg>
+  );
+}
+
+export function YouTubeIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 16} height={props.size || 16} {...base} {...props}>
+      <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+      <path d="M10.6 9.4v5.2l4.5-2.6-4.5-2.6Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export function SearchIcon(props) {
   return (
     <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>

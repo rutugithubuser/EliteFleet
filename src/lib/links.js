@@ -8,10 +8,10 @@
 export const LINKS = {
   // Homepage sections
   home: "/",
-  about: "/#about",
-  contact: "/#contact",
 
-  // Pages (fleet is fully built; the rest are still "coming soon")
+  // Pages (fleet, about, contact and legal are fully built; the rest are "coming soon")
+  contact: "/contact",
+  about: "/about",
   fleet: "/fleet",
   // Fleet page pre-filtered by category, e.g. "/fleet?category=luxury"
   // (category slugs come from Sanity; see the `category` document type)
