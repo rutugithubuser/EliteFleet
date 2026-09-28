@@ -1,0 +1,44 @@
+name: Auto Trigger Vercel Deploy (Same Branch)
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+permissions:
+  contents: write
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the branch that triggered the workflow
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Step 2: Get the last commit message from the branch
+      - name: Get last commit message
+        id: last_commit
+        run: echo "msg=$(git log -1 --pretty=%B | head -n 1)" >> $GITHUB_OUTPUT
+
+      # Step 3: Update deploy history file
+      - name: Update deploy history file
+        run: |
+          echo "🔹 Branch: ${{ github.ref_name }}" >> .vercel-deploy-history
+          echo "🔹 Time: $(date)" >> .vercel-deploy-history
+          echo "🔹 Trigger: ${{ steps.last_commit.outputs.msg }}" >> .vercel-deploy-history
+          echo "-----------------------------" >> .vercel-deploy-history
+          tail -n 100 .vercel-deploy-history > .vercel-deploy-history.tmp && mv .vercel-deploy-history.tmp .vercel-deploy-history
+
+      # Step 4: Commit & push dummy change as main account
+      - name: Commit and push dummy change as main account
+        run: |
+          git config user.name "NextHorizonView"
+          git config user.email "nexthorizonview@gmail.com"
+          git add .vercel-deploy-history
+          git commit -m "deploy: ${{ steps.last_commit.outputs.msg }}" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.MAIN_ACCOUNT_PAT }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
