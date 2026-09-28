@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons/Icons";
-import SanityImage from "./SanityImage";
+import CarImage from "./CarImage";
 import { carPriceLabel } from "@/lib/format";
 import styles from "./FeaturedVehicles.module.css";
 import Reveal from "./Reveal";
@@ -52,10 +52,10 @@ export default function FeaturedVehicles({ cars = [] }) {
       <Reveal delay={0.1}>
         <div className={styles.track} ref={trackRef}>
           {cars.map((car) => (
-            <div className={styles.card} key={car._id}>
-              <SanityImage
+            <div className={styles.card} key={car.slug ?? car._id}>
+              <CarImage
                 image={car.image}
-                alt={car.image?.alt || car.name}
+                alt={car.image?.alt || car.imageAlt || car.name}
                 sizes="(max-width: 600px) 80vw, 47vw"
                 className={styles.image}
               />

@@ -26,6 +26,7 @@ export default function CategoryGrid({ categories = [] }) {
           <CategoryLink
             key={cat._id}
             category={cat.name}
+            slug={cat.slug}
             className={`${styles.tile} ${i === 0 ? styles.tileLarge : ""}`}
           >
             <SanityImage

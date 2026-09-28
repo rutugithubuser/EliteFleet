@@ -1,0 +1,95 @@
+.range {
+  width: 100%;
+}
+
+.track {
+  position: relative;
+  height: 24px;
+}
+
+.rail,
+.fill {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.rail {
+  left: 0;
+  right: 0;
+  background: var(--color-line-strong);
+}
+
+.fill {
+  background: var(--color-text);
+}
+
+/* Stacked native range inputs: the track itself ignores the pointer,
+   only the thumbs (pointer-events: auto below) catch it. */
+.input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input:disabled {
+  cursor: default;
+}
+
+.input::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+  border: none;
+}
+
+.input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px; /* centers the 20px thumb on the 24px track */
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-text);
+  cursor: grab;
+}
+
+.input::-moz-range-track {
+  height: 100%;
+  background: transparent;
+  border: none;
+}
+
+.input::-moz-range-thumb {
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-text);
+  cursor: grab;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+}

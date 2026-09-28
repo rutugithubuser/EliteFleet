@@ -8,7 +8,7 @@ import styles from "./Footer.module.css";
 
 const EXPLORE = [
   { label: "Home", href: LINKS.home },
-  { label: "Fleet", href: LINKS.fleetSection },
+  { label: "Fleet", href: LINKS.fleet },
   { label: "About", href: LINKS.about },
   { label: "Chauffeur", href: LINKS.chauffeur },
   { label: "Contact", href: LINKS.contact },
@@ -61,7 +61,7 @@ export default function Footer({ settings = {}, categories = [], legalPages = []
         <div className={styles.col}>
           <p className={styles.colTitle}>Fleet</p>
           {categories.map((cat) => (
-            <CategoryLink key={cat._id} category={cat.name} className={styles.link}>
+            <CategoryLink key={cat._id} category={cat.name} slug={cat.slug} className={styles.link}>
               {cat.name}
             </CategoryLink>
           ))}

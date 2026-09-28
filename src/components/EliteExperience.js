@@ -68,7 +68,7 @@ export default function EliteExperience() {
           ))}
         </ol>
 
-        <Link href={LINKS.fleetSection} className={styles.cta}>
+        <Link href={LINKS.fleet} className={styles.cta}>
           Discover Elite Fleet <ArrowRightIcon size={16} />
         </Link>
       </Reveal>

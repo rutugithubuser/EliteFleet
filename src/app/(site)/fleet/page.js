@@ -1,19 +1,43 @@
-import ComingSoon from "@/components/ComingSoon";
+import FleetShowcase from "@/components/FleetShowcase";
+import FleetCta from "@/components/FleetCta";
 import { sanityFetch } from "@/sanity/lib/client";
-import { SITE_QUERY } from "@/sanity/lib/queries";
+import { FLEET_META_QUERY } from "@/sanity/lib/queries";
+import { VEHICLES } from "@/data/vehicles";
 
 export const revalidate = 60;
 
-export const metadata = { title: "Our Fleet — Elite Fleet" };
+export const metadata = {
+  title: "Our Fleet — Elite Fleet",
+  description:
+    "Browse every car in the Elite Fleet — luxury, sports, SUV, exotic and economy cars for rent in Dubai. Filter by category, brand, price, seats and transmission.",
+};
 
-// Placeholder until the Fleet page design is built
+// The 12-car line-up lives in src/data/vehicles.js; categories (pill row) and
+// the WhatsApp line still come from Sanity. Search, filters and the Filters
+// drawer all run client-side over this data (see FleetShowcase).
 export default async function FleetPage() {
-  const data = await sanityFetch({ query: SITE_QUERY });
+  const data = await sanityFetch({ query: FLEET_META_QUERY });
+
+  // The design's pill row puts SUV before Exotic; Sanity's `order` field has
+  // it the other way round, so sort the pills to match the design (anything
+  // not listed falls to the end, alphabetically).
+  const PILL_ORDER = ["Luxury", "Sports", "SUV", "Exotic", "Economy", "Convertible"];
+  const rank = (name) => {
+    const i = PILL_ORDER.indexOf(name);
+    return i === -1 ? PILL_ORDER.length : i;
+  };
+  const categoryOptions = [...(data?.categories ?? [])].sort(
+    (a, b) => rank(a.name) - rank(b.name) || a.name.localeCompare(b.name)
+  );
+
   return (
-    <ComingSoon
-      title="The Full Fleet"
-      text="Our complete fleet page is on its way. Until then, message us and we'll help you pick the right car."
-      settings={data?.settings ?? {}}
-    />
+    <>
+      <FleetShowcase
+        cars={VEHICLES}
+        // name + slug, so /fleet?category=... can pre-select a filter
+        categoryOptions={categoryOptions}
+      />
+      <FleetCta settings={data?.settings ?? {}} />
+    </>
   );
 }

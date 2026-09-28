@@ -12,6 +12,7 @@ const carFields = /* groq */ `
   seats,
   transmission,
   dailyKmLimit,
+  order,
   "image": image{ asset, crop, hotspot, alt }
 `;
 
@@ -40,7 +41,7 @@ export const HOME_QUERY = defineQuery(`{
     },
     "featured": featuredVehicles[]->{ ${carFields} }
   },
-  "cars": *[_type == "car"] | order(order asc, name asc){ ${carFields} },
+  // (The fleet cars themselves come from src/data/vehicles.js — see below.)
   "categories": *[_type == "category"] | order(order asc){
     _id,
     name,
@@ -71,6 +72,24 @@ export const SITE_QUERY = defineQuery(`{
   "legalPages": *[_type == "legalPage" && defined(slug.current)] | order(order asc, title asc){
     _id,
     title,
+    "slug": slug.current
+  }
+}`);
+
+// Categories + site settings for the /fleet page. The cars themselves come
+// from the static 12-vehicle list in src/data/vehicles.js, so the `cars`
+// half of the old FLEET_QUERY is no longer fetched there (homepage sections
+// still fetch their own Sanity cars).
+export const FLEET_META_QUERY = defineQuery(`{
+  "settings": *[_type == "siteSettings"][0]{
+    phone,
+    whatsappNumber,
+    email,
+    openingHours
+  },
+  "categories": *[_type == "category"] | order(order asc){
+    _id,
+    name,
     "slug": slug.current
   }
 }`);

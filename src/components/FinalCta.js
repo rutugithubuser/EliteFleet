@@ -31,7 +31,7 @@ export default function FinalCta({ settings = {} }) {
           <Link href={LINKS.booking} className={`${styles.bookBtn} shimmer`}>
             Book Now
           </Link>
-          <Link href={LINKS.fleetSection} className={styles.exploreBtn}>
+          <Link href={LINKS.fleet} className={styles.exploreBtn}>
             Explore Fleet
           </Link>
         </div>

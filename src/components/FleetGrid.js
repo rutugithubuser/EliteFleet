@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRightIcon } from "./icons/Icons";
-import SanityImage from "./SanityImage";
+import CarImage from "./CarImage";
 import Reveal from "./Reveal";
 import { useBooking } from "@/context/BookingContext";
 import { carPriceLabel, carSpecs, formatAed } from "@/lib/format";
@@ -54,12 +54,12 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
         // key={active}: switching category rebuilds the grid, so the cards animate in again
         <Reveal stagger key={active} className={styles.grid}>
           {visible.map((car, i) => (
-            <article className={styles.card} key={car._id}>
+            <article className={styles.card} key={car.slug ?? car._id}>
               <div className={styles.imageWrap}>
                 {car.category && <span className={styles.badge}>{car.category.toUpperCase()}</span>}
-                <SanityImage
+                <CarImage
                   image={car.image}
-                  alt={car.image?.alt || car.name}
+                  alt={car.image?.alt || car.imageAlt || car.name}
                   eager={i === 0}
                   sizes="(max-width: 600px) 100vw, (max-width: 1180px) 50vw, 33vw"
                   className={styles.image}
@@ -106,8 +106,8 @@ export default function FleetGrid({ cars = [], categoryNames = [] }) {
           View All {cars.length} Cars <ArrowRightIcon size={16} />
         </Link>
         <p className={styles.moreNote}>
-          Showing {visible.length} of {matching.length}{" "}
-          {matching.length === 1 ? "vehicle" : "vehicles"}. Prices per day as listed on elitefleet.ae.
+          Showing {visible.length} of {cars.length}{" "}
+          {cars.length === 1 ? "vehicle" : "vehicles"}. Prices per day as listed on elitefleet.ae.
         </p>
       </div>
     </section>

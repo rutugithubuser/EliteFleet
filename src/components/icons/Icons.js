@@ -82,6 +82,41 @@ export function WhatsappIcon(props) {
   );
 }
 
+export function SearchIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4.5 4.5" />
+    </svg>
+  );
+}
+
+export function SeatIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <circle cx="12" cy="7.5" r="3.25" />
+      <path d="M5.5 19.5a6.5 6.5 0 0 1 13 0" />
+    </svg>
+  );
+}
+
+export function GearIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <path d="M7 5.5v13M17 5.5v13M7 12h10" />
+    </svg>
+  );
+}
+
+export function RoadIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <path d="M7.5 3.5 4.5 20.5M16.5 3.5l3 17" />
+      <path d="M12 4v3.5M12 10.5v3.5M12 17v3.5" />
+    </svg>
+  );
+}
+
 export function MenuIcon(props) {
   return (
     <svg viewBox="0 0 24 24" width={props.size || 20} height={props.size || 20} {...base} {...props}>

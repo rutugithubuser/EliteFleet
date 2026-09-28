@@ -242,7 +242,7 @@ export default function Hero({ home = {}, settings = {}, categoryNames = [] }) {
       <div className={styles.copyRow}>
         <p className={styles.copy}>{description}</p>
         <div className={styles.ctas}>
-          <Link href={LINKS.fleetSection} className={styles.primaryCta}>
+          <Link href={LINKS.fleet} className={styles.primaryCta}>
             Explore Fleet <ArrowRightIcon size={18} />
           </Link>
           <Link href={LINKS.booking} className={styles.secondaryCta}>
