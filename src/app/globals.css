@@ -186,6 +186,29 @@ a {
   [data-reveal="stagger"] > :nth-child(n + 7) { --i: 6; }
 }
 
+/* ---------- Responsive line break utilities ---------- */
+.hidden {
+  display: none !important;
+}
+.inline {
+  display: inline !important;
+}
+.block {
+  display: block !important;
+}
+
+@media (min-width: 768px) {
+  .md\:hidden {
+    display: none !important;
+  }
+  .md\:inline {
+    display: inline !important;
+  }
+  .md\:block {
+    display: block !important;
+  }
+}
+
 /* ---------- Masked headings (used by the <MaskText> component) ----------
    Each line sits in a box with a hidden overflow and slides up into it
    when its <Reveal> section comes into view. */

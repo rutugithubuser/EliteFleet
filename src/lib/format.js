@@ -1,5 +1,16 @@
 // Small helpers for turning Sanity data into the text shown on the site.
 
+// The address exactly as the company writes it. Studio still carries the old
+// "Al Quoz" spelling, so every place that shows the address goes through
+// siteAddress() below — that keeps one source of truth for the correction.
+export const SITE_ADDRESS = "Al Tayer Warehouses, Al Goze Industrial First, UAE";
+
+// The address to display: the Studio value when there is one (corrected to the
+// spelling above), otherwise the constant.
+export function siteAddress(address) {
+  return (address || SITE_ADDRESS).replace(/Al Quoz/g, "Al Goze");
+}
+
 // 3999 -> "AED 3,999"
 export function formatAed(amount) {
   return `AED ${Number(amount).toLocaleString("en-US")}`;

@@ -64,6 +64,7 @@
 
 .linkActive {
   color: var(--color-text);
+  font-weight: 600;
 }
 
 .linkActive .dot {
@@ -202,6 +203,7 @@
 
 .overlayLinkActive {
   color: var(--color-gold);
+  font-weight: 700;
 }
 
 .overlaySpacer {

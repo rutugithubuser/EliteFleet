@@ -1,0 +1,591 @@
+/* ==========================================================================
+   About page — built against the 1440px design (all values measured there).
+   Section bands: hero 0–463 · banner 464–983 · who 984–1565 ·
+   mission 1566–2035 · why+gallery 2036–3405 · CTA 3406–3661.
+   ========================================================================== */
+
+/* ------------------------------- Eyebrow --------------------------------- */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.eyebrowLine {
+  flex-shrink: 0;
+  width: 24px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+/* Gold variant used on the dark mission band */
+.eyebrowGold {
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--color-gold);
+}
+
+@media (min-width: 768px) {
+  .eyebrowGold {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* --------------------------------- Hero ---------------------------------- */
+.hero {
+  padding: 185px 64px 72px;
+}
+
+.heroRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.heroMain {
+  min-width: 0;
+}
+
+.title {
+  margin-top: 32px;
+  font-size: 80px;
+  line-height: 80px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.subtitle {
+  flex: 0 0 420px;
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color-text-secondary);
+}
+
+/* --------------------------- Showroom banner ----------------------------- */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+}
+
+.bannerImg {
+  object-fit: cover;
+}
+
+/* ----------------------------- Who we are -------------------------------- */
+.who {
+  padding: 120px 64px;
+}
+
+.whoGrid {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  gap: 60px;
+  margin-top: 24px;
+}
+
+.whoTitle {
+  font-size: 64px;
+  line-height: 68px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.whoBody {
+  min-width: 0;
+}
+
+.whoCopy {
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color-text-secondary);
+}
+
+.whoCopy + .whoCopy {
+  margin-top: 24px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  height: 41px;
+  padding: 0 16px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 2px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+/* -------------------------------- Mission -------------------------------- */
+.mission {
+  padding: 120px 64px;
+  background: var(--color-ink);
+}
+
+.quote {
+  max-width: 900px;
+  margin: 38px 0 0;
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 58px;
+  font-weight: 500;
+  color: var(--color-white);
+  text-align: left;
+  width: 100%;
+}
+
+/* Desktop View */
+@media (min-width: 768px) {
+  .mission {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .missionInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .quote {
+    text-align: center !important;
+    max-width: 100%;
+    margin: 38px auto 0;
+  }
+}
+
+/* --------------------------- Why choose us ------------------------------- */
+.standard {
+  padding: 120px 64px;
+}
+
+.standardTitle {
+  margin-top: 20px;
+  margin-bottom: 52px;
+  font-size: 48px;
+  line-height: 58px;
+  font-weight: 700;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+}
+
+.feature {
+  padding: 24px 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.featureTitle {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* Italic serif number, optically pushed below the title's baseline */
+.featureNum {
+  position: relative;
+  top: 6px;
+  display: inline-block;
+  width: 65px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.featureCopy {
+  margin: 12px 0 0 65px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
+}
+
+/* -------------------------------- Gallery -------------------------------- */
+.gallery {
+  margin-top: 120px;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: 640fr 648fr;
+  gap: 24px;
+}
+
+.galleryTall {
+  grid-row: span 2;
+}
+
+.galleryCell {
+  min-width: 0;
+}
+
+.galleryImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.galleryTall .galleryImg {
+  height: 100%;
+  object-fit: cover;
+}
+
+.brandsContainer {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.brandsList {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #777777;
+  line-height: 1.6;
+}
+
+.brandItem {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.brandName {
+  display: inline-block;
+}
+
+.brandDot {
+  margin: 0 8px;
+  color: #777777;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
+  .brandsContainer {
+    margin-top: 24px;
+  }
+
+  .brandsList {
+    flex-wrap: wrap;
+    font-size: 13px;
+    row-gap: 6px;
+  }
+}
+
+/* ------------------------------ Closing CTA ------------------------------ */
+.cta {
+  padding: 80px 64px;
+  /* Charcoal, one step off the pure-black footer below it (as in the design) */
+  background: #171717;
+}
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.ctaText {
+  min-width: 0;
+}
+
+.ctaTitle {
+  font-size: 48px;
+  line-height: 58px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.ctaCopy {
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-on-dark-secondary);
+}
+
+.ctas {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.exploreBtn,
+.bookBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 30px;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.exploreBtn {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--color-white);
+}
+
+.bookBtn {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* ------------------------------ Responsive ------------------------------- */
+@media (max-width: 1180px) {
+  .hero {
+    padding: 132px 40px 64px;
+  }
+
+  .title {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .subtitle {
+    flex-basis: 340px;
+  }
+
+  .banner {
+    height: 400px;
+  }
+
+  .who {
+    padding: 96px 40px;
+  }
+
+  .whoTitle {
+    font-size: 46px;
+    line-height: 54px;
+  }
+
+  .mission {
+    padding: 96px 40px;
+  }
+
+  .quote {
+    margin-top: 32px;
+    font-size: 36px;
+    line-height: 46px;
+  }
+
+  .standard {
+    padding: 96px 40px;
+  }
+
+  .standardTitle {
+    margin-bottom: 44px;
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .gallery {
+    margin-top: 96px;
+  }
+
+  .cta {
+    padding: 64px 40px;
+  }
+
+  .ctaTitle {
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 900px) {
+  .heroRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .subtitle {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .whoGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryTall {
+    grid-row: auto;
+  }
+
+  .galleryTall .galleryImg {
+    height: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .ctaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .ctas {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 104px 20px 48px;
+  }
+
+  .title {
+    margin-top: 24px;
+    font-size: 38px;
+    line-height: 44px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .banner {
+    height: 260px;
+  }
+
+  .who {
+    padding: 72px 20px;
+  }
+
+  .whoGrid {
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .whoTitle {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .whoCopy {
+    font-size: 16px;
+    line-height: 27px;
+  }
+
+  .pills {
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .mission {
+    padding: 72px 20px;
+  }
+
+  .quote {
+    margin-top: 28px;
+    font-size: 26px;
+    line-height: 36px;
+  }
+
+  .standard {
+    padding: 72px 20px;
+  }
+
+  .standardTitle {
+    margin-top: 16px;
+    margin-bottom: 36px;
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .feature {
+    padding: 20px 0;
+  }
+
+  .featureNum {
+    top: 2px;
+    width: 38px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .featureCopy {
+    margin-left: 44px;
+  }
+
+  .gallery {
+    margin-top: 72px;
+  }
+
+  .cta {
+    padding: 56px 20px;
+  }
+
+  .ctaTitle {
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .ctaCopy {
+    font-size: 16px;
+  }
+
+  .exploreBtn,
+  .bookBtn {
+    height: 50px;
+    padding: 0 22px;
+    font-size: 14px;
+  }
+}

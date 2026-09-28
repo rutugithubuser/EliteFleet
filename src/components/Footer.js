@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "./Logo";
 import CategoryLink from "./CategoryLink";
-import { phoneLink } from "@/lib/format";
+import { phoneLink, siteAddress } from "@/lib/format";
 import { LINKS } from "@/lib/links";
 import styles from "./Footer.module.css";
 
@@ -15,6 +15,7 @@ const EXPLORE = [
 ];
 
 export default function Footer({ settings = {}, categories = [], legalPages = [] }) {
+  const address = siteAddress(settings.address);
   // Only show social icons that have a link filled in, in Site Settings
   const socials = [
     { name: "Instagram", href: settings.instagramUrl, icon: "/icons/instagram.png" },
@@ -81,10 +82,10 @@ export default function Footer({ settings = {}, categories = [], legalPages = []
               {settings.email}
             </a>
           )}
-          {settings.address && (
+          {address && (
             <p className={styles.contactLine}>
               <Image src="/icons/pin.png" alt="" width={16} height={16} />
-              {settings.address}
+              {address}
             </p>
           )}
           {settings.openingHours && (
