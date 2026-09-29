@@ -24,7 +24,6 @@ function isCategoryActive(slug) {
 }
 
 const LINKS = [
-<<<<<<< HEAD
   {
     label: "Home",
     href: ROUTES.home,
@@ -59,16 +58,6 @@ const LINKS = [
     isActive: ({ pathname, hash }) =>
       pathname === "/contact" || (pathname === "/" && hash === "#contact"),
   },
-=======
-  { label: "Home", href: ROUTES.home, isActive: (path) => path === "/" },
-  { label: "Fleet", href: ROUTES.fleetSection, isActive: (path) => path.startsWith("/fleet") },
-  { label: "Luxury", href: ROUTES.fleetSection, category: "Luxury" },
-  { label: "SUV", href: ROUTES.fleetSection, category: "SUV" },
-  { label: "Sports", href: ROUTES.fleetSection, category: "Sports" },
-  { label: "About", href: ROUTES.about },
-  { label: "Chauffeur", href: ROUTES.chauffeur, isActive: (path) => path.startsWith("/chauffeur") },
-  { label: "Contact", href: ROUTES.contact, isActive: (path) => path.startsWith("/contact") },
->>>>>>> 4910f27 (added vehicle detail page)
 ];
 
 // --- URL tracking for the category filter and section hashes ---------------
@@ -150,7 +139,6 @@ export default function Navbar({ settings = {} }) {
   const [open, setOpen] = useState(false);
   const whatsapp = whatsappLink(settings.whatsappNumber);
   const pathname = usePathname() ?? "/";
-<<<<<<< HEAD
   const search = useUrlSearch();
   const hash = useUrlHash();
   // Lowercased like the fleet page's own param reader, so "?category=Luxury"
@@ -159,132 +147,125 @@ export default function Navbar({ settings = {} }) {
   const activeState = { pathname, category, hash };
   const onDarkHero = !scrolled && DARK_HERO_PAGES.some((page) => pathname.startsWith(page));
 
-  return (
-    <header
-      className={`${styles.navbar} ${scrolled ? styles.navbarSolid : ""} ${onDarkHero ? styles.navbarOnDark : ""}`}
-    >
-=======
   // The vehicle detail page always shows a solid header — the gallery photo
   // sits right under the navbar and a transparent bar would float over it.
   const isCarDetail = /^\/fleet\/[^/]+/.test(pathname);
 
-  function handleNavClick(link) {
-    if (link.category) setCategory(link.category);
-    setOpen(false);
-  }
-
   return (
-    <header className={`${styles.navbar} ${scrolled || isCarDetail ? styles.navbarSolid : ""}`}>
->>>>>>> 4910f27 (added vehicle detail page)
-      <div className={styles.inner}>
-        <Link
-          href={ROUTES.home}
-          className={styles.logoLink}
-          aria-label="Elite Fleet home"
-          onClick={() => setOpen(false)}
-        >
-          <Logo height={44} />
-        </Link>
-
-        <nav className={styles.links} aria-label="Primary">
-          {LINKS.map((link) => {
-            const active = link.isActive(activeState);
-            return (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`${styles.link} ${active ? styles.linkActive : ""}`}
-                aria-current={active ? "page" : undefined}
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-                <span className={styles.dot} />
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className={styles.actions}>
-          <ThemeToggle className={styles.iconButton} />
-          {whatsapp && (
-            <a
-              href={whatsapp}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.iconButton}
-              aria-label="Chat on WhatsApp"
-            >
-              <WhatsappIcon />
-            </a>
-          )}
-          <Link href={ROUTES.booking} className={styles.bookButton} onClick={() => setOpen(false)}>
-            Book Now
-          </Link>
-          <button
-            type="button"
-            className={styles.menuButton}
-            aria-label="Open menu"
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon />
-          </button>
-        </div>
-      </div>
-
-      <div className={`${styles.overlay} ${open ? styles.overlayOpen : ""}`}>
-        <div className={styles.overlayTop}>
+    <header
+      className={`${styles.navbar} ${
+        scrolled || isCarDetail ? styles.navbarSolid : ""
+      } ${onDarkHero ? styles.navbarOnDark : ""}`}
+    >
+        <div className={styles.inner}>
           <Link
             href={ROUTES.home}
+            className={styles.logoLink}
             aria-label="Elite Fleet home"
             onClick={() => setOpen(false)}
           >
-            <Logo height={40} />
+            <Logo height={44} />
           </Link>
-          <button
-            type="button"
-            className={styles.closeButton}
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-          >
-            <CloseIcon />
-          </button>
-        </div>
 
-        <div className={styles.overlayLinks}>
-          {LINKS.map((link) => {
-            const active = link.isActive(activeState);
-            return (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`${styles.overlayLink} ${active ? styles.overlayLinkActive : ""}`}
-                aria-current={active ? "page" : undefined}
-                onClick={() => setOpen(false)}
+          <nav className={styles.links} aria-label="Primary">
+            {LINKS.map((link) => {
+              const active = link.isActive(activeState);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`${styles.link} ${active ? styles.linkActive : ""}`}
+                  aria-current={active ? "page" : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                  <span className={styles.dot} />
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className={styles.actions}>
+            <ThemeToggle className={styles.iconButton} />
+            {whatsapp && (
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.iconButton}
+                aria-label="Chat on WhatsApp"
               >
-                {link.label}
-                <ArrowRightIcon size={18} />
-              </Link>
-            );
-          })}
+                <WhatsappIcon />
+              </a>
+            )}
+            <Link href={ROUTES.booking} className={styles.bookButton} onClick={() => setOpen(false)}>
+              Book Now
+            </Link>
+            <button
+              type="button"
+              className={styles.menuButton}
+              aria-label="Open menu"
+              onClick={() => setOpen(true)}
+            >
+              <MenuIcon />
+            </button>
+          </div>
         </div>
 
-        <div className={styles.overlaySpacer} />
+        <div className={`${styles.overlay} ${open ? styles.overlayOpen : ""}`}>
+          <div className={styles.overlayTop}>
+            <Link
+              href={ROUTES.home}
+              aria-label="Elite Fleet home"
+              onClick={() => setOpen(false)}
+            >
+              <Logo height={40} />
+            </Link>
+            <button
+              type="button"
+              className={styles.closeButton}
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+            >
+              <CloseIcon />
+            </button>
+          </div>
 
-        <div className={styles.overlayActions}>
-          <Link href={ROUTES.booking} className={`${styles.overlayBook} shimmer`} onClick={() => setOpen(false)}>
-            Book Now <ArrowRightIcon size={18} />
-          </Link>
-          {whatsapp && (
-            <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.overlayWhatsapp}>
-              WhatsApp&nbsp;&nbsp;{settings.phone}
-            </a>
-          )}
-          <ThemeToggle variant="row" className={styles.overlayTheme} />
-          <p className={styles.overlayMeta}>
-            {[settings.email, settings.openingHours].filter(Boolean).join("  ·  ")}
-          </p>
+          <div className={styles.overlayLinks}>
+            {LINKS.map((link) => {
+              const active = link.isActive(activeState);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`${styles.overlayLink} ${active ? styles.overlayLinkActive : ""}`}
+                  aria-current={active ? "page" : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                  <ArrowRightIcon size={18} />
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className={styles.overlaySpacer} />
+
+          <div className={styles.overlayActions}>
+            <Link href={ROUTES.booking} className={`${styles.overlayBook} shimmer`} onClick={() => setOpen(false)}>
+              Book Now <ArrowRightIcon size={18} />
+            </Link>
+            {whatsapp && (
+              <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.overlayWhatsapp}>
+                WhatsApp&nbsp;&nbsp;{settings.phone}
+              </a>
+            )}
+            <ThemeToggle variant="row" className={styles.overlayTheme} />
+            <p className={styles.overlayMeta}>
+              {[settings.email, settings.openingHours].filter(Boolean).join("  ·  ")}
+            </p>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
   );
 }

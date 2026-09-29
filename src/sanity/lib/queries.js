@@ -12,10 +12,7 @@ const carFields = /* groq */ `
   seats,
   transmission,
   dailyKmLimit,
-<<<<<<< HEAD
   order,
-  "image": image{ asset, crop, hotspot, alt }
-=======
   "image": image{ asset, crop, hotspot, alt },
   year,
   overview,
@@ -25,7 +22,6 @@ const carFields = /* groq */ `
   driveType,
   "includes": includes[],
   "gallery": gallery[]{ asset, crop, hotspot, alt }
->>>>>>> 4910f27 (added vehicle detail page)
 `;
 
 // Everything the homepage needs, fetched in one request

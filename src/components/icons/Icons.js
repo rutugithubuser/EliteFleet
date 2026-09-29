@@ -385,12 +385,3 @@ export function GlassIcon(props) {
     </svg>
   );
 }
-
-export function SeatsIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" width={props.size || 24} height={props.size || 24} {...base} {...props}>
-      <circle cx="9" cy="8" r="3.25" />
-      <path d="M3 19.5a6 6 0 0 1 12 0M15.5 4.9a3.25 3.25 0 0 1 0 6.2M17.5 14a6 6 0 0 1 3.5 5.5" />
-    </svg>
-  );
-}

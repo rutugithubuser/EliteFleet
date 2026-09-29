@@ -2,10 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/client";
 import { CAR_QUERY, CAR_SLUGS_QUERY, SITE_QUERY } from "@/sanity/lib/queries";
-<<<<<<< HEAD
 import { VEHICLES } from "@/data/vehicles";
-import { carPriceLabel } from "@/lib/format";
-=======
 import VehicleGallery from "@/components/VehicleGallery";
 import SpecCard from "@/components/SpecCard";
 import IncludesList from "@/components/IncludesList";
@@ -25,9 +22,8 @@ import {
   SteeringIcon,
   TransmissionIcon,
 } from "@/components/icons/Icons";
-import { phoneLink } from "@/lib/format";
+import { carPriceLabel, phoneLink } from "@/lib/format";
 import styles from "./page.module.css";
->>>>>>> 4910f27 (added vehicle detail page)
 
 export const revalidate = 60;
 
@@ -129,20 +125,6 @@ export default async function CarPage({ params }) {
         <section className={styles.titlePriceMobile} aria-labelledby="mobile-title-heading">
           <TitlePrice car={car} />
         </section>
-
-        {/* 3. "Questions? Call ..." — below the sticky panel on desktop,
-               next to the related-vehicles section on mobile. */}
-        {/* {site?.settings?.phone && (
-          <a href={phoneLink(site.settings.phone)} className={styles.help}>
-            <span className={styles.helpIcon}>
-              <ShieldIcon size={20} />
-            </span>
-            <span>Questions? Call {site.settings.phone}</span>
-          </a>
-        )} */}
-
-        {/* 4. Mobile-only: booking form, between the specs and the overview. */}
-        {/* <MobileBooking car={car} settings={site?.settings ?? {}} /> */}
 
         {/* 5. Related vehicles (appears on both desktop and mobile) */}
         <RelatedVehicles cars={relatedCars} className={styles.related} />
