@@ -1,0 +1,85 @@
+/* Mobile sticky booking bar — fixed at the bottom of the viewport.
+   Figma: 390 × 81, with price, WhatsApp icon, and a CTA button. */
+
+.bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 20px;
+  height: 81px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-line);
+  box-shadow: 0 -8px 24px rgba(var(--shadow-color), 0.08);
+}
+
+/* Only show on mobile (<=600px) */
+@media (max-width: 600px) {
+  .bar {
+    display: flex;
+  }
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.priceValue {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.priceUnit {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  line-height: 1;
+}
+
+.whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 2px;
+  color: var(--color-text);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.whatsapp:hover {
+  border-color: var(--color-gold);
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1 1 0;
+  max-width: 196px;
+  height: 56px;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.cta:hover {
+  opacity: 0.85;
+}
+
+/* When the navbar is solid (scrolled), add a tiny gap above this bar so
+   nothing overlaps. The navbar handles its own height. */

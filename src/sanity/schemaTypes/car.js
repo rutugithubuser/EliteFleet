@@ -100,6 +100,73 @@ export const carType = defineType({
       ],
       validation: (Rule) => Rule.required(),
     }),
+    // Extra photos for the gallery (main image + thumbnails). Optional — the
+    // page falls back to the main photo when this is empty.
+    defineField({
+      name: "gallery",
+      title: "Gallery photos",
+      description: "More photos for the vehicle detail page (main image + thumbnails). Optional.",
+      type: "array",
+      of: [
+        defineField({
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Photo description",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: "year",
+      title: "Model year",
+      description: 'Shown before the car name, e.g. 2025. Optional.',
+      type: "number",
+      validation: (Rule) => Rule.integer(),
+    }),
+    defineField({
+      name: "overview",
+      title: "Overview",
+      description: "A short paragraph under the gallery on the detail page.",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "topSpeed",
+      title: "Top speed",
+      description: 'e.g. "250 km/h". Optional.',
+      type: "string",
+    }),
+    defineField({
+      name: "engine",
+      title: "Engine",
+      description: 'e.g. "6.75L V12". Optional.',
+      type: "string",
+    }),
+    defineField({
+      name: "fuel",
+      title: "Fuel type",
+      description: 'e.g. "Petrol". Optional.',
+      type: "string",
+    }),
+    defineField({
+      name: "driveType",
+      title: "Drive type",
+      description: 'e.g. "4WD". Optional.',
+      type: "string",
+    }),
+    defineField({
+      name: "includes",
+      title: "Rental includes",
+      description: "Check-list under 'Rental Includes' on the detail page. Leave empty for the defaults.",
+      type: "array",
+      of: [defineArrayMember({ type: "string" })],
+    }),
     defineField({
       name: "order",
       title: "Display order",

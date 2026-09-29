@@ -1,0 +1,236 @@
+/* The sticky right-hand booking panel on the desktop detail page.
+   Figma 27:78: a 416 × 868 card, 32px padding, 24px gaps between blocks. */
+
+.panel {
+  position: sticky;
+  top: 88px;
+  /* sits just under the fixed navbar */
+  width: 416px;
+  flex-shrink: 0;
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+  padding: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---------- Title ---------- */
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Figma's badge is the category ("SUV"), not the brand. */
+.badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background: #efe6d3;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.32px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+:global(:root[data-theme="dark"]) .badge {
+  background: #2c2618;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2.16px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.name {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: -0.48px;
+  color: var(--color-text);
+}
+
+/* ---------- Price ---------- */
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.priceValue {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: -0.32px;
+  color: var(--color-text);
+}
+
+.priceUnit {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--color-text-muted);
+}
+
+.rule {
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* ---------- Fields ---------- */
+.dates {
+  display: flex;
+  gap: 12px;
+}
+
+/* Date fields sit side by side; the location field spans the full width. */
+.field {
+  min-width: 0;
+}
+
+.dates .field {
+  flex: 1 1 0;
+}
+
+.dates .field>label {
+  margin-bottom: 8px;
+}
+
+.fieldIcon {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Summary ---------- */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 16px;
+  background: var(--color-bg);
+}
+
+.summaryRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.summaryRow dt {
+  color: var(--color-text-secondary);
+}
+
+.summaryRow dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
+/* ---------- CTAs ---------- */
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  width: 100%;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: 0;
+  border-radius: 2px;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.03px;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.cta:hover {
+  opacity: 0.85;
+}
+
+.ctaGhost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  width: 100%;
+  border: 1px solid var(--color-text);
+  color: var(--color-text);
+  border-radius: 2px;
+  font-size: 15px;
+  padding: 10px 0;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.03px;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.ctaGhost:hover {
+  background: var(--color-text);
+  color: var(--color-surface);
+}
+
+.confirm {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Below the two-column breakpoint: the panel stops being sticky ---------- */
+@media (max-width: 1180px) {
+  .panel {
+    position: static;
+    width: 100%;
+    max-width: 480px;
+    max-height: none;
+    overflow: visible;
+    padding: 32px 24px;
+  }
+
+  .name,
+  .priceValue {
+    font-size: 26px;
+    line-height: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .panel {
+    padding: 24px 20px;
+    gap: 20px;
+  }
+
+  .dates {
+    flex-direction: column;
+  }
+
+  .name,
+  .priceValue {
+    font-size: 22px;
+    line-height: 28px;
+  }
+}

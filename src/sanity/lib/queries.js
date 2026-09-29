@@ -12,8 +12,20 @@ const carFields = /* groq */ `
   seats,
   transmission,
   dailyKmLimit,
+<<<<<<< HEAD
   order,
   "image": image{ asset, crop, hotspot, alt }
+=======
+  "image": image{ asset, crop, hotspot, alt },
+  year,
+  overview,
+  topSpeed,
+  engine,
+  fuel,
+  driveType,
+  "includes": includes[],
+  "gallery": gallery[]{ asset, crop, hotspot, alt }
+>>>>>>> 4910f27 (added vehicle detail page)
 `;
 
 // Everything the homepage needs, fetched in one request
@@ -73,7 +85,8 @@ export const SITE_QUERY = defineQuery(`{
     _id,
     title,
     "slug": slug.current
-  }
+  },
+  "cars": *[_type == "car"] | order(order asc, name asc){ ${carFields} }
 }`);
 
 // Categories + site settings for the /fleet page. The cars themselves come

@@ -65,6 +65,14 @@ export function ChevronRightIcon(props) {
   );
 }
 
+export function ExpandIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
+      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+    </svg>
+  );
+}
+
 export function ArrowRightIcon(props) {
   return (
     <svg viewBox="0 0 24 24" width={props.size || 18} height={props.size || 18} {...base} {...props}>
@@ -247,6 +255,80 @@ export function SlidersIcon(props) {
       <circle cx="12" cy="6" r="2" fill="var(--icon-bg,#f7f7f5)" />
       <circle cx="7" cy="12" r="2" fill="var(--icon-bg,#f7f7f5)" />
       <circle cx="17" cy="18" r="2" fill="var(--icon-bg,#f7f7f5)" />
+    </svg>
+  );
+}
+
+export function SeatsIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <rect x="5.25" y="3" width="6" height="5.5" rx="1.75" />
+      <path d="M3 10.5h18a1.5 1.5 0 0 1 1.5 1.5v5.25a1.75 1.75 0 0 1-1.75 1.75H3.25A1.75 1.75 0 0 1 1.5 17.25V12A1.5 1.5 0 0 1 3 10.5Z" />
+      <path d="M1.5 14.5h21" />
+    </svg>
+  );
+}
+
+export function TransmissionIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <path d="M3 12h18" />
+      <circle cx="7" cy="6.75" r="1.75" />
+      <circle cx="7" cy="17.25" r="1.75" />
+      <circle cx="13.5" cy="6.75" r="1.75" />
+      <circle cx="13.5" cy="17.25" r="1.75" />
+    </svg>
+  );
+}
+
+export function MileageIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <path d="M7.5 2.5 2 21.5" />
+      <path d="M16.5 2.5 22 21.5" />
+      <path d="M12 4.5v2.75M12 10.75v3.5M12 17.25v2.25" />
+    </svg>
+  );
+}
+
+export function SpeedIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <circle cx="12" cy="12" r="8.75" />
+      <path d="M12 12 16 7.5" />
+    </svg>
+  );
+}
+
+export function EngineIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <rect x="2.5" y="7" width="9" height="10" rx="1.5" />
+      <path d="M5.5 7v10M8.5 7v10" />
+      <path d="M11.5 9.5h2.25l2.75 2.75v2.5l-2.75 2.75H11.5" />
+    </svg>
+  );
+}
+
+export function FuelIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <path d="M4 20.5V4.25A1.5 1.5 0 0 1 5.5 2.75h3A1.5 1.5 0 0 1 10 4.25v16.25" />
+      <path d="M2.5 20.5h9" />
+      <rect x="5" y="5.75" width="4" height="3.5" rx="0.75" />
+      <path d="M10 7.5h2.75a2 2 0 0 1 2 2v7.25a1.75 1.75 0 0 0 3.5 0V8.5L16.5 6" />
+    </svg>
+  );
+}
+
+export function SteeringIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 22} height={props.size || 22} {...base} {...props}>
+      <circle cx="12" cy="12" r="8.75" />
+      <circle cx="12" cy="12" r="2.75" />
+      <path d="M12 3.25v6" />
+      <path d="M9.62 10.63 4.42 7.63" />
+      <path d="M14.38 10.63 19.58 7.63" />
     </svg>
   );
 }

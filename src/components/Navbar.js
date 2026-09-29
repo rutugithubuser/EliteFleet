@@ -24,6 +24,7 @@ function isCategoryActive(slug) {
 }
 
 const LINKS = [
+<<<<<<< HEAD
   {
     label: "Home",
     href: ROUTES.home,
@@ -58,6 +59,16 @@ const LINKS = [
     isActive: ({ pathname, hash }) =>
       pathname === "/contact" || (pathname === "/" && hash === "#contact"),
   },
+=======
+  { label: "Home", href: ROUTES.home, isActive: (path) => path === "/" },
+  { label: "Fleet", href: ROUTES.fleetSection, isActive: (path) => path.startsWith("/fleet") },
+  { label: "Luxury", href: ROUTES.fleetSection, category: "Luxury" },
+  { label: "SUV", href: ROUTES.fleetSection, category: "SUV" },
+  { label: "Sports", href: ROUTES.fleetSection, category: "Sports" },
+  { label: "About", href: ROUTES.about },
+  { label: "Chauffeur", href: ROUTES.chauffeur, isActive: (path) => path.startsWith("/chauffeur") },
+  { label: "Contact", href: ROUTES.contact, isActive: (path) => path.startsWith("/contact") },
+>>>>>>> 4910f27 (added vehicle detail page)
 ];
 
 // --- URL tracking for the category filter and section hashes ---------------
@@ -139,6 +150,7 @@ export default function Navbar({ settings = {} }) {
   const [open, setOpen] = useState(false);
   const whatsapp = whatsappLink(settings.whatsappNumber);
   const pathname = usePathname() ?? "/";
+<<<<<<< HEAD
   const search = useUrlSearch();
   const hash = useUrlHash();
   // Lowercased like the fleet page's own param reader, so "?category=Luxury"
@@ -151,6 +163,19 @@ export default function Navbar({ settings = {} }) {
     <header
       className={`${styles.navbar} ${scrolled ? styles.navbarSolid : ""} ${onDarkHero ? styles.navbarOnDark : ""}`}
     >
+=======
+  // The vehicle detail page always shows a solid header — the gallery photo
+  // sits right under the navbar and a transparent bar would float over it.
+  const isCarDetail = /^\/fleet\/[^/]+/.test(pathname);
+
+  function handleNavClick(link) {
+    if (link.category) setCategory(link.category);
+    setOpen(false);
+  }
+
+  return (
+    <header className={`${styles.navbar} ${scrolled || isCarDetail ? styles.navbarSolid : ""}`}>
+>>>>>>> 4910f27 (added vehicle detail page)
       <div className={styles.inner}>
         <Link
           href={ROUTES.home}

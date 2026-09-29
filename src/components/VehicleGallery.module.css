@@ -1,0 +1,156 @@
+/* Figma 27:78 — the detail page's left column: a 864x576 main image with
+   chevrons and a counter, then a 864x136 row of four thumbnails. */
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.main {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background: var(--color-line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* 48x48 white squares, vertically centred, 24px from each edge. */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--color-ink);
+  background: var(--color-white);
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.nav:hover {
+  opacity: 0.85;
+}
+
+.navPrev {
+  left: 24px;
+}
+
+.navNext {
+  right: 24px;
+}
+
+/* "1 / 4" pill, 24px in from the bottom-right corner. */
+.counter {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 28px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.024px;
+  color: var(--color-white);
+  background: var(--color-ink);
+  border-radius: 2px;
+}
+
+/* Figma measures the row at 864 wide with 16px gaps. */
+.thumbs {
+  display: flex;
+  gap: 16px;
+}
+
+.thumb {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+  aspect-ratio: 203 / 136;
+  background: var(--color-line);
+  border: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* The 40% white wash Figma puts over every unselected thumbnail. */
+.thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--color-white);
+  opacity: 0.4;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.thumb:hover::before {
+  opacity: 0.2;
+}
+
+.thumbActive::before {
+  opacity: 0;
+}
+
+/* Inset outline so selecting a thumb never changes the row's layout. */
+.thumbActive {
+  outline: 2px solid var(--color-ink);
+  outline-offset: -2px;
+}
+
+.thumbImage {
+  object-fit: cover;
+}
+
+@media (max-width: 1180px) {
+  .gallery {
+    width: 864px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery {
+    width: 100%;
+  }
+
+  .main {
+    aspect-ratio: 4 / 3;
+  }
+
+  .thumbs {
+    gap: 8px;
+  }
+
+  .nav {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navPrev {
+    left: 16px;
+  }
+
+  .navNext {
+    right: 16px;
+  }
+
+  .counter {
+    right: 16px;
+    bottom: 16px;
+  }
+}

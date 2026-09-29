@@ -1,0 +1,326 @@
+/* "Related Vehicles" — 3-up card grid (Figma 27:273) that becomes a
+   300px-card horizontal scroller on mobile (Figma 28:533).
+   Values below are the Figma node metrics. */
+
+.section {
+  background: var(--color-surface);
+  padding: 96px var(--space-desktop) 120px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: var(--container-max);
+  margin: 0 auto 48px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrowRule {
+  width: 24px;
+  height: 1px;
+  flex-shrink: 0;
+  background: var(--color-gold);
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2.16px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 54px;
+  letter-spacing: -1.2px;
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  color: var(--color-text-secondary);
+}
+
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.028px;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 2px;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.viewAll:hover {
+  border-color: var(--color-gold);
+}
+
+/* Desktop: 1312 / 3 = 416px cards with a 32px gap. */
+.track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 416 / 280;
+  overflow: hidden;
+  background: var(--color-line);
+  border-radius: 2px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryBadge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.32px;
+  text-transform: uppercase;
+  color: var(--color-text);
+  background: var(--color-white);
+  border-radius: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.cardHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardMake {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2.16px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.cardModel {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.1px;
+  color: var(--color-text);
+}
+
+.specs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.specRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.specIcon {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.specText {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--color-text-secondary);
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-line);
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.priceValue {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.1px;
+  color: var(--color-text);
+}
+
+.priceUnit {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.viewDetails {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.028px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+.viewDetails:hover {
+  color: var(--color-text);
+}
+
+.bookNow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 20px;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.028px;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 2px;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.bookNow:hover {
+  border-color: var(--color-gold);
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 64px var(--space-tablet) 96px;
+  }
+
+  .title {
+    font-size: 40px;
+    line-height: 46px;
+    letter-spacing: -0.8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 48px 0 120px;
+  }
+
+  .header {
+    display: block;
+    margin-bottom: 24px;
+    padding: 0 var(--space-mobile);
+  }
+
+  /* Figma mobile keeps only the title — no eyebrow, subtitle or button. */
+  .eyebrowRow,
+  .subtitle,
+  .viewAll {
+    display: none;
+  }
+
+  .heading {
+    gap: 0;
+  }
+
+  .title {
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: -0.176px;
+  }
+
+  /* 300px cards, 16px gap, 20px insets, snapped to the left edge. */
+  .track {
+    display: flex;
+    grid-template-columns: none;
+    gap: 16px;
+    max-width: none;
+    margin: 0;
+    padding: 0 var(--space-mobile);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+  }
+}

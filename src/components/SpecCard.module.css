@@ -1,0 +1,39 @@
+/* One cell of the specification grid. The Figma cell ("Spec Item", 12:277) is
+   198 × 119 on desktop and 167 × 119 on mobile: a 1px bordered box with a 22px
+   gold icon 20px from the top, then the label and value stacked 4px apart. */
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  height: 119px;
+  padding: 20px;
+  border-top: 1px solid var(--color-line);
+}
+
+.icon {
+  display: flex;
+  color: var(--color-accent);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  color: var(--color-text-muted);
+}
+
+.value {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--color-text);
+}

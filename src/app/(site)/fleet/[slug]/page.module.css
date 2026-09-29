@@ -1,0 +1,283 @@
+/* Styles for the vehicle detail page. Kept separate from the homepage so
+   the page can be a Server Component (no `use client`) and still style itself. */
+
+.carPage {
+  background: var(--color-bg);
+  padding: 64px 0 64px;
+}
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb {
+  padding: 40px 64px 16px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.breadcrumbInner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.breadcrumbLink {
+  font-weight: 500;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-gold);
+}
+
+.breadcrumbSep {
+  color: var(--color-text-muted);
+}
+
+.breadcrumbCurrent {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ---------- Page body ----------
+   A single flex column. On desktop the left column and the sticky booking
+   panel sit side by side; on mobile every section stacks and reorders to
+   match the Figma mobile frame. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* Desktop: two columns (gallery + info | sticky booking panel) */
+.desktopLayout {
+  display: flex;
+  gap: 32px;
+  padding: 0 64px 64px;
+}
+
+.leftColumn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.overviewHeading {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 56px;
+}
+
+/* Figma 27:102 — "Specifications" is a 24/32 semibold heading sitting 24px
+   above the grid. */
+.specsHeading {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.24px;
+  color: var(--color-text);
+  margin-bottom: 24px;
+}
+
+.overviewText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  max-width: 760px;
+}
+
+/* Figma 27:102 — four 198px cells across, 24px apart, rows flush together. */
+.specGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 24px;
+  row-gap: 0;
+}
+
+/* "Questions? Call ..." — sits just below the sticky panel on desktop,
+   next to the related-vehicles section on mobile. */
+.help {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.help:hover {
+  color: var(--color-text);
+}
+
+.helpIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+/* Mobile-only: the title+price block, between the gallery and the specs. */
+.titlePriceMobile {
+  display: none;
+}
+
+/* Mobile-only: the booking form, between the specs and the overview. */
+.mobileBooking {
+  display: none;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1180px) {
+  .breadcrumb {
+    padding: 32px 40px 12px;
+  }
+
+  .desktopLayout {
+    flex-direction: column;
+    padding: 0 40px 48px;
+    gap: 40px;
+  }
+
+  .leftColumn {
+    gap: 48px;
+  }
+
+  .overviewHeading {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .specsHeading {
+    margin-bottom: 24px;
+  }
+
+  .specGrid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 16px;
+  }
+
+  .help {
+    padding: 0 40px 8px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .breadcrumb {
+    padding: 24px 20px 8px;
+  }
+
+  .breadcrumbInner {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  /* Unwrap the desktop layout so every section becomes a direct child of
+     .body and can be reordered to match the Figma mobile frame. */
+  .desktopLayout,
+  .leftColumn {
+    display: contents;
+  }
+
+  .desktopLayout {
+    padding: 0;
+  }
+
+  .leftColumn {
+    gap: 0;
+  }
+
+  /* Hide the desktop booking panel — the mobile form replaces it. */
+  .panel {
+    display: none;
+  }
+
+  /* Show the mobile-only sections. */
+  .titlePriceMobile,
+  .mobileBooking {
+    display: block;
+  }
+
+  .titlePriceMobile {
+    padding: 24px 20px 0;
+  }
+
+  .mobileBooking {
+    padding: 0 20px;
+  }
+
+  /* Reorder to match the Figma mobile frame:
+     Gallery → Title & Price → Specifications → Booking → Overview → Help →
+     Related Vehicles → Sticky bar */
+  .body > * {
+    order: 99;
+  }
+
+  .gallery {
+    order: 1;
+  }
+
+  .titlePriceMobile {
+    order: 2;
+  }
+
+  .specs {
+    order: 3;
+  }
+
+  .mobileBooking {
+    order: 4;
+  }
+
+  .overview {
+    order: 5;
+  }
+
+  .help {
+    order: 6;
+    padding: 0 20px 8px;
+  }
+
+  .related {
+    order: 7;
+  }
+
+  .sticky {
+    order: 8;
+  }
+
+  /* Figma 28:434 — 390px frame, 20px gutters, 40px above the heading. */
+  .specs {
+    padding: 40px 20px 8px;
+  }
+
+  .overviewHeading {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+
+  .specsHeading {
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: -0.176px;
+    margin-bottom: 16px;
+  }
+
+  .overviewText {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .specGrid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 16px;
+  }
+}

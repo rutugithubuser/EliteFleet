@@ -1,0 +1,77 @@
+/* "Rental Includes" — a two-column check-list.
+   Figma: heading 32px, then a 2 × N grid of 400 × 26 rows, each with an
+   18px check icon + 26px text, 24px between the columns. */
+
+.wrap {
+  padding: 56px 0 0;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text);
+  margin-bottom: 56px;
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 400px);
+  gap: 16px 24px;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  height: 26px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  color: var(--color-gold);
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+@media (max-width: 1180px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .wrap {
+    padding: 40px 0 0;
+  }
+
+  .heading {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+
+  .list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .item {
+    height: 24px;
+    gap: 18px;
+  }
+
+  .text {
+    font-size: 15px;
+  }
+}
