@@ -4,9 +4,8 @@ import Image from "next/image";
 import SanityImage from "./SanityImage";
 
 /**
- * A vehicle's photo, whatever supplies it: a plain public-folder path
- * (the static 12-vehicle list in src/data/vehicles.js) or a Sanity asset
- * object (anything still served from the CMS).
+ * A vehicle's photo. Cars come from Sanity, so this is normally a Sanity
+ * image; a plain public-folder path (e.g. "/images/fleet/car.png") also works.
  *
  * Fills its parent box exactly like SanityImage, so card styles and
  * image boxes stay identical whichever source is used.

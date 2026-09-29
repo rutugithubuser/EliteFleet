@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const carType = defineType({
   name: "car",
@@ -108,7 +108,7 @@ export const carType = defineType({
       description: "More photos for the vehicle detail page (main image + thumbnails). Optional.",
       type: "array",
       of: [
-        defineField({
+        defineArrayMember({
           type: "image",
           options: { hotspot: true },
           fields: [

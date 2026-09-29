@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { WhatsappIcon, ArrowRightIcon } from "./icons/Icons";
+import { LINKS } from "@/lib/links";
 import { carPriceLabel, formatAed, whatsappLink } from "@/lib/format";
 import styles from "./StickyBookingBar.module.css";
 
@@ -29,12 +31,9 @@ export default function StickyBookingBar({ car, settings = {} }) {
         </a>
       )}
 
-      <a
-        href={`/booking?car=${encodeURIComponent(car?.slug ?? "")}`}
-        className={styles.cta}
-      >
+      <Link href={car?.slug ? LINKS.bookCar(car.slug) : LINKS.booking} className={styles.cta}>
         Book This Car <ArrowRightIcon size={18} />
-      </a>
+      </Link>
     </div>
   );
 }

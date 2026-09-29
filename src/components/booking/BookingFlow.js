@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRightIcon,
@@ -12,7 +11,7 @@ import {
 } from "@/components/icons/Icons";
 import { useToday } from "@/lib/useToday";
 import { whatsappLink, formatAed } from "@/lib/format";
-import { VEHICLES } from "@/data/vehicles";
+import CarImage from "@/components/CarImage";
 import { LINKS } from "@/lib/links";
 import styles from "./BookingFlow.module.css";
 
@@ -111,13 +110,12 @@ function VehicleSummaryCard({ vehicle, form, onChangeClick }) {
   return (
     <aside className={styles.summaryCard}>
       <div className={styles.summaryImageWrap}>
-        <Image
-          src={vehicle.image}
-          alt={vehicle.imageAlt || vehicle.name}
-          fill
+        <CarImage
+          image={vehicle.image}
+          alt={vehicle.image?.alt || vehicle.name}
           className={styles.summaryImage}
           sizes="(max-width: 900px) 100vw, 360px"
-          priority
+          eager
         />
       </div>
       <div className={styles.summaryBody}>
@@ -184,10 +182,9 @@ function MobileVehicleBar({ vehicle, onChangeClick, whatsapp }) {
     <div className={styles.mobileBar}>
       <div className={styles.mobileBarRow}>
         <div className={styles.mobileBarImgWrap}>
-          <Image
-            src={vehicle.image}
-            alt={vehicle.imageAlt || vehicle.name}
-            fill
+          <CarImage
+            image={vehicle.image}
+            alt={vehicle.image?.alt || vehicle.name}
             className={styles.mobileBarImg}
             sizes="72px"
           />
@@ -576,12 +573,27 @@ function ConfirmationStep({ vehicle, form, whatsapp }) {
   );
 }
 
-export default function BookingFlow({ carSlug, settings = {} }) {
-  const vehicle =
-    (carSlug ? VEHICLES.find((v) => v.slug === carSlug) : null) ?? VEHICLES[0];
+// Details passed in the link from a car page (dates and pickup location),
+// kept only if they look valid, so the visitor doesn't type them twice.
+function prefillFrom(prefill = {}, locations = []) {
+  const isDate = (v) => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v);
+  const form = {};
+  if (isDate(prefill.pickupDate)) form.pickupDate = prefill.pickupDate;
+  if (isDate(prefill.dropoffDate)) form.dropoffDate = prefill.dropoffDate;
+  if (prefill.pickupLocation && locations.includes(prefill.pickupLocation)) {
+    form.pickupLocation = prefill.pickupLocation;
+  }
+  return form;
+}
+
+// cars: every car from Sanity. carSlug: the car chosen on the previous page
+// (?car=...); without one, the first car in "Display order" is shown.
+export default function BookingFlow({ carSlug, cars = [], prefill, settings = {} }) {
+  const vehicle = (carSlug ? cars.find((v) => v.slug === carSlug) : null) ?? cars[0];
+  const locations = settings?.pickupLocations ?? [];
 
   const [step, setStep] = useState(2);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState(() => ({ ...EMPTY_FORM, ...prefillFrom(prefill, locations) }));
   const [errors, setErrors] = useState({});
 
   const waBase = whatsappLink(settings?.whatsappNumber) || "https://wa.me/971585210105";
@@ -617,7 +629,21 @@ export default function BookingFlow({ carSlug, settings = {} }) {
     window.location.href = LINKS.fleet;
   };
 
-  const locations = settings?.pickupLocations ?? [];
+  // No cars published in Sanity yet
+  if (!vehicle) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.pageHeader}>
+          <div className={styles.pageHeaderInner}>
+            <h1 className={styles.pageTitle}>Request a Booking</h1>
+            <p className={styles.pageSubtitle}>
+              Our online booking is being updated. Please message us on WhatsApp to book.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>

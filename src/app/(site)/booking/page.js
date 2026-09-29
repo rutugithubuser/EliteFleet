@@ -14,6 +14,6 @@ export default async function BookingPage() {
   const data = await sanityFetch({ query: BOOKING_QUERY });
   const settings = data?.settings ?? {};
 
-  return <BookingPageClient settings={settings} />;
+  return <BookingPageClient cars={data?.cars ?? []} settings={settings} />;
 }
 

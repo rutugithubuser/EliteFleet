@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
-// Fields shared by every place a car is shown
-const carFields = /* groq */ `
+// Fields for a car card (fleet grids, featured cars, related cars, booking summary)
+const carCardFields = /* groq */ `
   _id,
   name,
   brand,
@@ -13,8 +13,13 @@ const carFields = /* groq */ `
   transmission,
   dailyKmLimit,
   order,
-  "image": image{ asset, crop, hotspot, alt },
   year,
+  "image": image{ asset, crop, hotspot, alt }
+`;
+
+// Everything about one car, for its details page
+const carFields = /* groq */ `
+  ${carCardFields},
   overview,
   topSpeed,
   engine,
@@ -23,6 +28,9 @@ const carFields = /* groq */ `
   "includes": includes[],
   "gallery": gallery[]{ asset, crop, hotspot, alt }
 `;
+
+// Every car in Sanity, in "Display order" (then by name)
+const allCars = /* groq */ `*[_type == "car" && defined(slug.current)] | order(order asc, name asc){ ${carCardFields} }`;
 
 // Everything the homepage needs, fetched in one request
 export const HOME_QUERY = defineQuery(`{
@@ -45,11 +53,11 @@ export const HOME_QUERY = defineQuery(`{
     "heroSlides": heroSlides[defined(car)]{
       _key,
       "image": wideImage{ asset, crop, hotspot, alt },
-      "car": car->{ ${carFields} }
+      "car": car->{ ${carCardFields} }
     },
-    "featured": featuredVehicles[]->{ ${carFields} }
+    "featured": featuredVehicles[]->{ ${carCardFields} }
   },
-  // (The fleet cars themselves come from src/data/vehicles.js — see below.)
+  "cars": ${allCars},
   "categories": *[_type == "category"] | order(order asc){
     _id,
     name,
@@ -81,15 +89,11 @@ export const SITE_QUERY = defineQuery(`{
     _id,
     title,
     "slug": slug.current
-  },
-  "cars": *[_type == "car"] | order(order asc, name asc){ ${carFields} }
+  }
 }`);
 
-// Categories + site settings for the /fleet page. The cars themselves come
-// from the static 12-vehicle list in src/data/vehicles.js, so the `cars`
-// half of the old FLEET_QUERY is no longer fetched there (homepage sections
-// still fetch their own Sanity cars).
-export const FLEET_META_QUERY = defineQuery(`{
+// Everything the /fleet page needs: settings, category pills and every car
+export const FLEET_QUERY = defineQuery(`{
   "settings": *[_type == "siteSettings"][0]{
     phone,
     whatsappNumber,
@@ -100,11 +104,26 @@ export const FLEET_META_QUERY = defineQuery(`{
     _id,
     name,
     "slug": slug.current
-  }
+  },
+  "cars": ${allCars}
 }`);
 
 // One car, for /fleet/[slug]
 export const CAR_QUERY = defineQuery(`*[_type == "car" && slug.current == $slug][0]{ ${carFields} }`);
+
+// The car details page: the car, up to 3 others in the same category, and the booking settings
+export const CAR_PAGE_QUERY = defineQuery(`{
+  "car": *[_type == "car" && slug.current == $slug][0]{ ${carFields} },
+  "related": *[_type == "car" && defined(slug.current) && slug.current != $slug
+    && category._ref == *[_type == "car" && slug.current == $slug][0].category._ref
+  ] | order(order asc, name asc)[0...3]{ ${carCardFields} },
+  "settings": *[_type == "siteSettings"][0]{
+    phone,
+    whatsappNumber,
+    email,
+    pickupLocations
+  }
+}`);
 
 // All car slugs, so each car page is pre-built
 export const CAR_SLUGS_QUERY = defineQuery(`*[_type == "car" && defined(slug.current)].slug.current`);
@@ -119,14 +138,15 @@ export const LEGAL_PAGE_QUERY = defineQuery(`*[_type == "legalPage" && slug.curr
 
 export const LEGAL_SLUGS_QUERY = defineQuery(`*[_type == "legalPage" && defined(slug.current)].slug.current`);
 
-// Everything the /booking page needs
+// Everything the /booking page needs (the chosen car is picked from "cars" by its slug)
 export const BOOKING_QUERY = defineQuery(`{
   "settings": *[_type == "siteSettings"][0]{
     phone,
     whatsappNumber,
     email,
     pickupLocations
-  }
+  },
+  "cars": ${allCars}
 }`);
 
 // Everything the Chauffeur page needs

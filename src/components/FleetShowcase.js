@@ -439,8 +439,9 @@ export default function FleetShowcase({ cars = [], categoryOptions = [] }) {
                 {car.category && <span className={styles.badge}>{car.category.toUpperCase()}</span>}
                 <CarImage
                   image={car.image}
-                  alt={car.image?.alt || car.imageAlt || car.name}
-                  eager={i === 0}
+                  alt={car.image?.alt || car.name}
+                  // The first row of cards is visible straight away, so load those photos first
+                  eager={i < 3}
                   sizes="(max-width: 600px) 100vw, (max-width: 1180px) 50vw, 33vw"
                   className={styles.image}
                 />

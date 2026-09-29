@@ -1,18 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowRightIcon, CalendarIcon, WhatsappIcon } from "./icons/Icons";
 import FieldDropdown from "./FieldDropdown";
 import { formatAed, whatsappLink } from "@/lib/format";
+import { useToday } from "@/lib/useToday";
+import { LINKS } from "@/lib/links";
 import styles from "./BookingPanel.module.css";
-
-function todayLocal() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
 
 // The sticky right-hand panel on the desktop detail page.
 //
@@ -24,6 +19,7 @@ export default function BookingPanel({ car, settings = {} }) {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [location, setLocation] = useState("Select location");
+  const today = useToday();
 
   const locations = settings.pickupLocations ?? ["Dubai Marina", "Downtown Dubai", "DXB Airport"];
 
@@ -31,6 +27,17 @@ export default function BookingPanel({ car, settings = {} }) {
   const dailyRate = hasDailyRate ? formatAed(car.pricePerDay) : "Rates on request";
   const mileage = car?.dailyKmLimit ? `${car.dailyKmLimit} km` : "Unlimited";
   const whatsapp = whatsappLink(settings.whatsappNumber);
+
+  // "Book This Car" opens the booking page with this car, and carries over
+  // whatever the visitor already picked here (dates, pickup location).
+  const bookingParams = new URLSearchParams();
+  if (pickupDate) bookingParams.set("pickup", pickupDate);
+  if (dropoffDate) bookingParams.set("dropoff", dropoffDate);
+  if (locations.includes(location)) bookingParams.set("location", location);
+  const extra = bookingParams.toString();
+  const bookingHref = car?.slug
+    ? `${LINKS.bookCar(car.slug)}${extra ? `&${extra}` : ""}`
+    : LINKS.booking;
 
   return (
     <aside className={styles.panel} aria-label="Book this car">
@@ -59,7 +66,7 @@ export default function BookingPanel({ car, settings = {} }) {
           options={[]}
           onSelect={setPickupDate}
           date
-          min={todayLocal()}
+          min={today || undefined}
         />
         <FieldDropdown
           className={styles.field}
@@ -70,7 +77,7 @@ export default function BookingPanel({ car, settings = {} }) {
           options={[]}
           onSelect={setDropoffDate}
           date
-          min={pickupDate || todayLocal()}
+          min={pickupDate || today || undefined}
         />
       </div>
 
@@ -98,10 +105,10 @@ export default function BookingPanel({ car, settings = {} }) {
         </div>
       </dl>
 
-      <button type="button" className={styles.cta}>
+      <Link href={bookingHref} className={styles.cta}>
         Book This Car
         <ArrowRightIcon size={18} />
-      </button>
+      </Link>
 
       {whatsapp && (
         <a href={whatsapp} target="_blank" rel="noreferrer" className={styles.ctaGhost}>
