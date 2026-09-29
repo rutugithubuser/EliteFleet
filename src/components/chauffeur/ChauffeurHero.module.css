@@ -1,0 +1,236 @@
+/* Dark in both light and night mode, as in the Figma design */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+/* Photo on the right, fading into black on the left */
+.imageWrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 52.8%;
+  overflow: hidden;
+}
+
+/* Only a little taller than the photo box, so the car isn't zoomed in more than in the design */
+.imageWrap > .parallax {
+  inset: -3% 0;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* Left: fades into black behind the text. Top: a light shade so the white navbar links stay readable */
+.fade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11, 11, 11, 0.45) 0, rgba(11, 11, 11, 0) 140px),
+    linear-gradient(
+      90deg,
+      var(--color-ink) 0%,
+      rgba(11, 11, 11, 0.2) 25%,
+      rgba(11, 11, 11, 0.15) 100%
+    );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  min-height: 800px;
+  margin: 0 auto;
+  padding: 291px 64px 93px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2.16px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.rule {
+  width: 24px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+.title {
+  font-size: 104px;
+  font-weight: 500;
+  line-height: 100px;
+  letter-spacing: -4.16px;
+  color: var(--color-white);
+}
+
+.title em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-gold);
+}
+
+.copy {
+  max-width: 500px;
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color-on-dark-secondary);
+}
+
+.ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 28px;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03px;
+  white-space: nowrap;
+}
+
+.primary {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.secondary {
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.primary svg {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .primary:hover svg {
+    transform: translateX(4px);
+  }
+  .secondary:hover {
+    background: var(--color-white);
+    color: var(--color-ink);
+  }
+}
+
+/* ---------- Tablet (landscape) ---------- */
+@media (max-width: 1180px) {
+  .imageWrap {
+    width: 62%;
+  }
+  /* The text overlaps more of the photo here, so the fade is darker */
+  .fade {
+    background:
+      linear-gradient(180deg, rgba(11, 11, 11, 0.45) 0, rgba(11, 11, 11, 0) 140px),
+      linear-gradient(
+        90deg,
+        var(--color-ink) 0%,
+        rgba(11, 11, 11, 0.6) 40%,
+        rgba(11, 11, 11, 0.15) 100%
+      );
+  }
+  .content {
+    min-height: 720px;
+    padding: 220px 40px 80px;
+  }
+  .title {
+    font-size: 88px;
+    line-height: 86px;
+    letter-spacing: -3.5px;
+  }
+  .copy {
+    max-width: 440px;
+  }
+}
+
+/* ---------- Tablet (portrait) and mobile: photo on top, text below ---------- */
+@media (max-width: 900px) {
+  .hero {
+    --photo-h: min(130vw, 620px);
+  }
+  /* Starts 40px down, as in the mobile design */
+  .imageWrap {
+    top: 40px;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: var(--photo-h);
+  }
+  .image {
+    object-position: 50% 50%;
+  }
+  /* Dark at the top for the navbar, clear over the car, black before the text.
+     It reaches full black a little before the bottom edge so no line shows there. */
+  .fade {
+    background: linear-gradient(
+      180deg,
+      rgba(11, 11, 11, 0.8) 0%,
+      rgba(11, 11, 11, 0.1) 14%,
+      rgba(11, 11, 11, 0.6) 74%,
+      var(--color-ink) 96%
+    );
+  }
+  .content {
+    min-height: 0;
+    padding: calc(40px + var(--photo-h) - 152px) 40px 64px;
+    gap: 20px;
+  }
+  .title {
+    font-size: 64px;
+    line-height: 64px;
+    letter-spacing: -1.8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: calc(40px + var(--photo-h) - 152px) 20px 56px;
+  }
+  .title {
+    font-size: 48px;
+    line-height: 50px;
+    letter-spacing: -1.2px;
+  }
+  .copy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .ctas {
+    width: 100%;
+  }
+  .primary {
+    width: 100%;
+  }
+  /* WhatsApp is already in the navbar on phones */
+  .secondary {
+    display: none;
+  }
+}

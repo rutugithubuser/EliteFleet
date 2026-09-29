@@ -19,6 +19,38 @@
   box-shadow: 0 8px 24px rgba(var(--shadow-color), 0.06);
 }
 
+/* See-through navbar over a dark photo (e.g. the Chauffeur page): white text */
+.navbarOnDark {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+.navbarOnDark .link {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.navbarOnDark .link:hover,
+.navbarOnDark .linkActive {
+  color: var(--color-white);
+}
+
+.navbarOnDark .iconButton {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--color-white);
+}
+
+.navbarOnDark .iconButton:hover {
+  border-color: var(--color-white);
+}
+
+.navbarOnDark .bookButton {
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.navbarOnDark .menuButton {
+  color: var(--color-white);
+}
+
 .inner {
   display: flex;
   align-items: center;

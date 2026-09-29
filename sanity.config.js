@@ -13,7 +13,7 @@ import { apiVersion, dataset, projectId } from "./src/sanity/env";
 import { schema } from "./src/sanity/schemaTypes";
 import { structure } from "./src/sanity/structure";
 
-const singletonTypes = new Set(["homePage", "siteSettings"]);
+const singletonTypes = new Set(["homePage", "chauffeurPage", "siteSettings"]);
 const singletonActions = new Set(["publish", "discardChanges", "restore"]);
 
 export default defineConfig({
@@ -22,7 +22,7 @@ export default defineConfig({
   dataset,
   schema: {
     types: schema.types,
-    // Hide Homepage and Site Settings from "Create new document"
+    // Hide the single pages (Homepage, Chauffeur Page, Site Settings) from "Create new document"
     templates: (templates) =>
       templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
   },

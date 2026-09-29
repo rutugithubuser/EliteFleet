@@ -109,3 +109,18 @@ export const LEGAL_PAGE_QUERY = defineQuery(`*[_type == "legalPage" && slug.curr
 }`);
 
 export const LEGAL_SLUGS_QUERY = defineQuery(`*[_type == "legalPage" && defined(slug.current)].slug.current`);
+
+// Everything the Chauffeur page needs
+export const CHAUFFEUR_QUERY = defineQuery(`{
+  "settings": *[_type == "siteSettings"][0]{
+    phone,
+    whatsappNumber,
+    pickupLocations
+  },
+  "page": *[_type == "chauffeurPage"][0]{
+    "heroImage": heroImage{ asset, crop, hotspot, alt },
+    "fleetImage": fleetImage{ asset, crop, hotspot, alt },
+    services[]{ _key, title, description, icon },
+    "cars": chauffeurCars[]->{ _id, name, seats, "slug": slug.current }
+  }
+}`);
