@@ -7,6 +7,10 @@ export const structure = (S) =>
         .id("homePage")
         .child(S.document().schemaType("homePage").documentId("homePage")),
       S.listItem()
+        .title("Chauffeur Page")
+        .id("chauffeurPage")
+        .child(S.document().schemaType("chauffeurPage").documentId("chauffeurPage")),
+      S.listItem()
         .title("Site Settings")
         .id("siteSettings")
         .child(S.document().schemaType("siteSettings").documentId("siteSettings")),

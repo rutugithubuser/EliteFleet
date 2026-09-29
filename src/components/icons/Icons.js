@@ -267,3 +267,48 @@ export function MoonIcon(props) {
     </svg>
   );
 }
+
+// ---------- Chauffeur page ----------
+
+export function UserIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 24} height={props.size || 24} {...base} {...props}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" />
+    </svg>
+  );
+}
+
+export function PlaneIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 24} height={props.size || 24} {...base} {...props}>
+      <path d="M12 2.75c.9 0 1.5.9 1.5 2v4.5l7.5 4.25v2l-7.5-2.25v4.25l2.25 1.75v1.75L12 20l-3.75 1v-1.75l2.25-1.75V13.25L3 15.5v-2l7.5-4.25V4.75c0-1.1.6-2 1.5-2Z" />
+    </svg>
+  );
+}
+
+export function BriefcaseIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 24} height={props.size || 24} {...base} {...props}>
+      <rect x="3" y="7" width="18" height="13" rx="1.5" />
+      <path d="M8.5 7V5.5A1.5 1.5 0 0 1 10 4h4a1.5 1.5 0 0 1 1.5 1.5V7M3 12.5h18" />
+    </svg>
+  );
+}
+
+export function GlassIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 24} height={props.size || 24} {...base} {...props}>
+      <path d="M7.5 3h9l-.6 5.5a3.9 3.9 0 0 1-7.8 0L7.5 3ZM7.8 7.5h8.4M12 12.5V21M9 21h6" />
+    </svg>
+  );
+}
+
+export function SeatsIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width={props.size || 24} height={props.size || 24} {...base} {...props}>
+      <circle cx="9" cy="8" r="3.25" />
+      <path d="M3 19.5a6 6 0 0 1 12 0M15.5 4.9a3.25 3.25 0 0 1 0 6.2M17.5 14a6 6 0 0 1 3.5 5.5" />
+    </svg>
+  );
+}

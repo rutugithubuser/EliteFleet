@@ -118,6 +118,9 @@ function useUrlHash() {
   return useSyncExternalStore(subscribeToUrl, () => window.location.hash, () => "");
 }
 
+// Pages whose top section is a dark photo: the see-through navbar uses white text there
+const DARK_HERO_PAGES = ["/chauffeur"];
+
 // True once the page is scrolled more than 80px (always false while pre-building on the server)
 function subscribeToScroll(callback) {
   window.addEventListener("scroll", callback, { passive: true });
@@ -142,9 +145,12 @@ export default function Navbar({ settings = {} }) {
   // and Sanity's lowercase slugs agree.
   const category = new URLSearchParams(search).get("category")?.toLowerCase() ?? null;
   const activeState = { pathname, category, hash };
+  const onDarkHero = !scrolled && DARK_HERO_PAGES.some((page) => pathname.startsWith(page));
 
   return (
-    <header className={`${styles.navbar} ${scrolled ? styles.navbarSolid : ""}`}>
+    <header
+      className={`${styles.navbar} ${scrolled ? styles.navbarSolid : ""} ${onDarkHero ? styles.navbarOnDark : ""}`}
+    >
       <div className={styles.inner}>
         <Link
           href={ROUTES.home}

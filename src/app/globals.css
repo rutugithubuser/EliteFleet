@@ -10,6 +10,7 @@
   --color-white: #ffffff;
   --color-gold: #c6a15b;
   --color-on-dark-secondary: #b4b4ae;
+  --color-ink-2: #171717; /* second dark band, e.g. the chauffeur request form */
 
   /* Theme: light (default) */
   --color-bg: #f7f7f5; /* page background */
@@ -23,6 +24,7 @@
   --color-button-bg: #0b0b0b; /* main black buttons */
   --color-button-text: #ffffff;
   --color-band: #0b0b0b; /* dark sections: Signature Collection, footer, mobile menu */
+  --color-error: #b3261e; /* form error messages */
   --shadow-color: 11, 11, 11; /* used as rgba(var(--shadow-color), 0.1) */
   color-scheme: light;
 
@@ -55,6 +57,7 @@
   --color-button-bg: #f3f2ee;
   --color-button-text: #0b0b0b;
   --color-band: #171715;
+  --color-error: #ff8a80;
   --shadow-color: 0, 0, 0;
   color-scheme: dark;
 }

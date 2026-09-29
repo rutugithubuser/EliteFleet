@@ -17,6 +17,7 @@ import styles from "./Hero.module.css";
 import Link from "next/link";
 import { LINKS } from "@/lib/links";
 import Parallax from "./Parallax";
+import { useToday } from "@/lib/useToday";
 
 // Used only if a Homepage field is left empty in Sanity
 const DEFAULTS = {
@@ -26,21 +27,6 @@ const DEFAULTS = {
   heroDescription:
     "Premium and luxury cars delivered across Dubai. Choose your car and make every journey exceptional.",
 };
-
-function todayLocal() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
-
-// Today's date is only known in the visitor's browser (the page is pre-built on the server).
-// This returns "" while pre-building and the real date in the browser, without a hydration mismatch.
-const noSubscribe = () => () => {};
-function useToday() {
-  return useSyncExternalStore(noSubscribe, todayLocal, () => "");
-}
 
 // Splits text into words that slide in one after another (see .word in Hero.module.css)
 function AnimatedWords({ text, startAt }) {
