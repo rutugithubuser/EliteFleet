@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Reveal from "./Reveal";
 import { phoneLink, siteAddress, whatsappLink } from "@/lib/format";
+import { sendEnquiry } from "@/lib/sendEnquiry";
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
@@ -84,9 +85,12 @@ export default function Contact({ settings = {} }) {
   // sit on top of the native date input (which has no placeholder of its own).
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
-  // Set on submit: the enquiry is composed into a WhatsApp message, because
-  // there is no form backend — same flow as the rest of the booking journey.
+  // Set once the enquiry has been emailed to the team (Web3Forms): shows the
+  // thank-you, with a WhatsApp button that has the same message typed in.
   const [reply, setReply] = useState(null);
+  // "idle" | "sending" | "error" (the email couldn't be sent)
+  const [sendState, setSendState] = useState("idle");
+  const [fallbackHref, setFallbackHref] = useState(null);
 
   function openPicker(event) {
     const input = event.currentTarget;
@@ -99,7 +103,7 @@ export default function Contact({ settings = {} }) {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.currentTarget));
     const text = [
@@ -115,10 +119,30 @@ export default function Contact({ settings = {} }) {
       .filter(Boolean)
       .join("\n");
 
-    setReply({
+    const href = wa ? `${wa}?text=${encodeURIComponent(text)}` : tel;
+
+    setSendState("sending");
+    const result = await sendEnquiry({
+      subject: `New website enquiry${data.type ? ` — ${data.type}` : ""}`,
       name: data.name || "",
-      href: wa ? `${wa}?text=${encodeURIComponent(text)}` : tel,
+      email: data.email || "",
+      fields: {
+        "Full name": data.name,
+        Email: data.email,
+        "WhatsApp phone": data.phone,
+        "Enquiry type": data.type,
+        "Pickup date": data.pickup,
+        "Drop-off date": data.dropoff,
+        Message: data.message,
+      },
     });
+    if (!result.ok) {
+      setFallbackHref(href);
+      setSendState("error");
+      return;
+    }
+    setSendState("idle");
+    setReply({ name: data.name || "", href });
   }
 
   return (
@@ -218,12 +242,12 @@ export default function Contact({ settings = {} }) {
             {reply ? (
               <div className={styles.sent} role="status">
                 <h3 className={styles.sentTitle}>
-                  Thanks{reply.name ? `, ${reply.name.split(" ")[0]}` : ""} — your enquiry is
-                  ready to send.
+                  Thanks{reply.name ? `, ${reply.name.split(" ")[0]}` : ""} — your message has
+                  been sent.
                 </h3>
                 <p className={styles.sentText}>
-                  Send it to us on WhatsApp and we’ll get back to you — every day from 8:00 AM to
-                  10:00 PM.
+                  We’ll get back to you soon — every day from 8:00 AM to 10:00 PM. Want a quicker
+                  reply? Send the same message on WhatsApp.
                 </p>
                 <div className={styles.sentActions}>
                   <a
@@ -232,14 +256,14 @@ export default function Contact({ settings = {} }) {
                     rel="noreferrer"
                     className={styles.sentPrimary}
                   >
-                    Send on WhatsApp <ArrowUpRightIcon size={16} />
+                    Chat on WhatsApp <ArrowUpRightIcon size={16} />
                   </a>
                   <button
                     type="button"
                     className={styles.sentSecondary}
                     onClick={() => setReply(null)}
                   >
-                    Edit details
+                    Send another message
                   </button>
                 </div>
               </div>
@@ -367,9 +391,25 @@ export default function Contact({ settings = {} }) {
                   />
                 </div>
 
-                <button type="submit" className={styles.submit}>
-                  Send Message <ArrowRightIcon size={16} />
+                <button type="submit" className={styles.submit} disabled={sendState === "sending"}>
+                  {sendState === "sending" ? (
+                    "Sending…"
+                  ) : (
+                    <>
+                      Send Message <ArrowRightIcon size={16} />
+                    </>
+                  )}
                 </button>
+
+                {sendState === "error" && (
+                  <p className={styles.sendError} role="alert">
+                    Sorry, your message couldn’t be sent. Please try again or{" "}
+                    <a href={fallbackHref} target="_blank" rel="noreferrer">
+                      send it on WhatsApp
+                    </a>
+                    .
+                  </p>
+                )}
               </form>
             )}
           </div>

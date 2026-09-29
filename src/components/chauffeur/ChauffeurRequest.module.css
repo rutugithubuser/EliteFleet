@@ -231,14 +231,95 @@
   }
 }
 
-.status:empty {
-  display: none;
+.submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
-.status {
+/* "Couldn't send" message under the button */
+.sendError {
   font-size: 14px;
   line-height: 22px;
+  color: var(--color-error);
+}
+
+.sendError a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Thank-you message that replaces the form after sending */
+.sent {
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.sentIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.sentTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--color-text);
+}
+
+.sentText {
+  font-size: 16px;
+  line-height: 26px;
   color: var(--color-text-secondary);
+}
+
+.sentActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.sentActions .submit {
+  width: auto;
+  flex: 1;
+  text-decoration: none;
+}
+
+.sentSecondary {
+  flex: 1;
+  height: 56px;
+  padding: 0 24px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .sentSecondary:hover {
+    border-color: var(--color-text);
+  }
+}
+
+@media (max-width: 600px) {
+  .sentActions {
+    flex-direction: column;
+  }
+  .sentTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
 }
 
 /* ---------- Tablet ---------- */

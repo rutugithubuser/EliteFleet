@@ -735,3 +735,20 @@ a.detailValue:hover {
     gap: 12px;
   }
 }
+
+/* Sending state + "couldn't send" message (email via Web3Forms) */
+.submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.sendError {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-error);
+}
+
+.sendError a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

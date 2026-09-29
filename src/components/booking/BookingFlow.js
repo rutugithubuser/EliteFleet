@@ -11,6 +11,7 @@ import {
 } from "@/components/icons/Icons";
 import { useToday } from "@/lib/useToday";
 import { whatsappLink, formatAed } from "@/lib/format";
+import { sendEnquiry } from "@/lib/sendEnquiry";
 import CarImage from "@/components/CarImage";
 import { LINKS } from "@/lib/links";
 import styles from "./BookingFlow.module.css";
@@ -252,7 +253,7 @@ function errEl(errors, name) {
   );
 }
 
-function DetailsForm({ vehicle, form, onChange, onSubmit, errors, locations, whatsapp, phone }) {
+function DetailsForm({ vehicle, form, onChange, onSubmit, errors, locations, whatsapp, phone, sendState, whatsappWithDetails }) {
   const pickup1Ref = useRef(null);
   const pickup2Ref = useRef(null);
   const today = useToday();
@@ -479,11 +480,32 @@ function DetailsForm({ vehicle, form, onChange, onSubmit, errors, locations, wha
         <Link href={LINKS.fleet} className={styles.backLink}>
           ← Back to vehicle
         </Link>
-        <button type="submit" className={[styles.submitBtn, "shimmer"].join(" ")} id="booking-submit">
-          Request Booking
-          <ArrowRightIcon size={16} className={styles.submitIcon} />
+        <button
+          type="submit"
+          className={[styles.submitBtn, "shimmer"].join(" ")}
+          id="booking-submit"
+          disabled={sendState === "sending"}
+        >
+          {sendState === "sending" ? (
+            "Sending…"
+          ) : (
+            <>
+              Request Booking
+              <ArrowRightIcon size={16} className={styles.submitIcon} />
+            </>
+          )}
         </button>
       </div>
+
+      {sendState === "error" && (
+        <p className={styles.sendError} role="alert">
+          Sorry, your request couldn&apos;t be sent. Please try again or{" "}
+          <a href={whatsappWithDetails} target="_blank" rel="noreferrer">
+            send it on WhatsApp
+          </a>
+          .
+        </p>
+      )}
 
       {/* WhatsApp alternative */}
       {whatsapp && (
@@ -595,6 +617,8 @@ export default function BookingFlow({ carSlug, cars = [], prefill, settings = {}
   const [step, setStep] = useState(2);
   const [form, setForm] = useState(() => ({ ...EMPTY_FORM, ...prefillFrom(prefill, locations) }));
   const [errors, setErrors] = useState({});
+  // "idle" | "sending" | "error" (the email couldn't be sent)
+  const [sendState, setSendState] = useState("idle");
 
   const waBase = whatsappLink(settings?.whatsappNumber) || "https://wa.me/971585210105";
   const phone = settings?.phone || "+971 58 521 0105";
@@ -608,7 +632,7 @@ export default function BookingFlow({ carSlug, cars = [], prefill, settings = {}
     });
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const found = validate(form);
     setErrors(found);
@@ -617,10 +641,30 @@ export default function BookingFlow({ carSlug, cars = [], prefill, settings = {}
       document.getElementById(`booking-${firstKey}`)?.focus();
       return;
     }
-    const url = `${waBase}?text=${encodeURIComponent(buildWhatsAppText(vehicle, form))}`;
-    const win = window.open(url, "_blank");
-    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-    if (!win) window.location.assign(url);
+    // Email the request to the team (Web3Forms). The confirmation step then
+    // offers WhatsApp with the same details typed in.
+    setSendState("sending");
+    const result = await sendEnquiry({
+      subject: `New booking request — ${vehicle.name}`,
+      name: form.fullName.trim(),
+      email: form.email.trim(),
+      fields: {
+        Vehicle: vehicle.name,
+        "Full name": form.fullName.trim(),
+        Email: form.email.trim(),
+        "WhatsApp phone": form.phone.trim(),
+        "Pickup date": fmtDate(form.pickupDate),
+        "Drop-off date": fmtDate(form.dropoffDate),
+        "Pickup location": form.pickupLocation,
+        "Drop-off location": form.dropoffLocation || form.pickupLocation,
+        "Special requests": form.specialRequests.trim(),
+      },
+    });
+    if (!result.ok) {
+      setSendState("error");
+      return;
+    }
+    setSendState("idle");
     setStep(3);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -679,6 +723,8 @@ export default function BookingFlow({ carSlug, cars = [], prefill, settings = {}
             />
             <div className={styles.formCard}>
               <DetailsForm
+                sendState={sendState}
+                whatsappWithDetails={`${waBase}?text=${encodeURIComponent(buildWhatsAppText(vehicle, form))}`}
                 vehicle={vehicle}
                 form={form}
                 onChange={handleChange}

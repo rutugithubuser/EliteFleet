@@ -945,3 +945,21 @@
     margin: 0 6px;
   }
 }
+
+/* Sending state + "couldn't send" message (email via Web3Forms) */
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.sendError {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-error);
+}
+
+.sendError a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
