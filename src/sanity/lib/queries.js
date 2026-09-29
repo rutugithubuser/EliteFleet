@@ -110,6 +110,16 @@ export const LEGAL_PAGE_QUERY = defineQuery(`*[_type == "legalPage" && slug.curr
 
 export const LEGAL_SLUGS_QUERY = defineQuery(`*[_type == "legalPage" && defined(slug.current)].slug.current`);
 
+// Everything the /booking page needs
+export const BOOKING_QUERY = defineQuery(`{
+  "settings": *[_type == "siteSettings"][0]{
+    phone,
+    whatsappNumber,
+    email,
+    pickupLocations
+  }
+}`);
+
 // Everything the Chauffeur page needs
 export const CHAUFFEUR_QUERY = defineQuery(`{
   "settings": *[_type == "siteSettings"][0]{
