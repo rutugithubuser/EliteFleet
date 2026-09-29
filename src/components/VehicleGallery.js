@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import SanityImage from "./SanityImage";
 import { ChevronLeftIcon, ChevronRightIcon, ExpandIcon } from "./icons/Icons";
 import styles from "./VehicleGallery.module.css";
 
@@ -10,27 +10,11 @@ import styles from "./VehicleGallery.module.css";
 // thumbnails 16px apart. The active thumb carries a 2px ink stroke; the rest sit
 // under a 40% white wash ("Dim" in Figma).
 //
-// Photos come from /public/images/fleet and are referenced by plain path on the
-// vehicle entry (see src/data/vehicles.js) — the same public-folder source the
-// /fleet grid uses. Nothing here talks to Sanity, so the gallery renders even
-// though the dataset has no uploaded gallery photos.
-//
-// Each car currently has a single photo, so until more are added the same one
-// fills the four-up thumbnail row. Give a car a `gallery` array of public paths
-// and it takes over automatically; delete PLACEHOLDER_THUMBS when every car has
-// real multi-photo sets.
-const PLACEHOLDER_THUMBS = 4;
-
+// Photos come from the car in Sanity: its main "Photo" first, then any
+// "Gallery photos". With only one photo there are no arrows or thumbnails.
 export default function VehicleGallery({ car }) {
-  const alt = car?.imageAlt || car?.name || "";
-
-  // Real multi-photo list if the car has one, otherwise repeat its single photo.
-  const photos =
-    Array.isArray(car?.gallery) && car.gallery.length
-      ? car.gallery
-      : typeof car?.image === "string" && car.image
-        ? Array.from({ length: PLACEHOLDER_THUMBS }, () => car.image)
-        : [];
+  const photos = [car?.image, ...(car?.gallery ?? [])].filter((p) => p?.asset);
+  const altFor = (photo) => photo?.alt || car?.name || "";
 
   const [main, setMain] = useState(0);
   if (photos.length === 0) return null;
@@ -42,11 +26,10 @@ export default function VehicleGallery({ car }) {
   return (
     <div className={styles.gallery}>
       <div className={styles.main}>
-        <Image
-          src={photos[current]}
-          alt={alt}
-          fill
-          priority
+        <SanityImage
+          image={photos[current]}
+          alt={altFor(photos[current])}
+          eager
           sizes="(max-width: 1180px) 100vw, 864px"
           className={styles.image}
         />
@@ -81,9 +64,9 @@ export default function VehicleGallery({ car }) {
 
       {multiple && (
         <div className={styles.thumbs} role="tablist" aria-label="Gallery thumbnails">
-          {photos.map((src, i) => (
+          {photos.map((photo, i) => (
             <button
-              key={`${src}-${i}`}
+              key={`${photo.asset?._ref ?? "photo"}-${i}`}
               type="button"
               role="tab"
               aria-selected={i === current}
@@ -91,10 +74,9 @@ export default function VehicleGallery({ car }) {
               className={`${styles.thumb} ${i === current ? styles.thumbActive : ""}`}
               onClick={() => setMain(i)}
             >
-              <Image
-                src={src}
-                alt={alt}
-                fill
+              <SanityImage
+                image={photo}
+                alt={altFor(photo)}
                 sizes="203px"
                 className={styles.thumbImage}
               />

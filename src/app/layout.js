@@ -1,4 +1,5 @@
 import "./globals.css";
+import InlineScript from "@/components/InlineScript";
 
 export const metadata = {
   title: "Elite Fleet — Luxury & Premium Car Rental in Dubai",
@@ -13,9 +14,10 @@ const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!==
 export default function RootLayout({ children }) {
   return (
     // suppressHydrationWarning: the script above changes data-theme before React loads, which is expected
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    // data-scroll-behavior: new pages open at the top instantly; in-page links (e.g. #request) still scroll smoothly
+    <html lang="en" data-theme="light" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <InlineScript html={themeScript} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

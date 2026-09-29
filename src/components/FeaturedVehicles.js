@@ -55,7 +55,7 @@ export default function FeaturedVehicles({ cars = [] }) {
             <div className={styles.card} key={car.slug ?? car._id}>
               <CarImage
                 image={car.image}
-                alt={car.image?.alt || car.imageAlt || car.name}
+                alt={car.image?.alt || car.name}
                 sizes="(max-width: 600px) 80vw, 47vw"
                 className={styles.image}
               />

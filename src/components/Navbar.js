@@ -72,8 +72,18 @@ const LINKS = [
 const urlListeners = new Set();
 let unpatchHistory = null;
 
+// Next calls pushState/replaceState from inside React's own rendering work
+// (a useInsertionEffect), where React forbids state updates. So the navbar is
+// told about the new URL a moment later — right after React finishes — instead
+// of immediately. Several calls in a row are merged into one update.
+let notifyScheduled = false;
 function notifyUrlListeners() {
-  for (const listener of urlListeners) listener();
+  if (notifyScheduled) return;
+  notifyScheduled = true;
+  setTimeout(() => {
+    notifyScheduled = false;
+    for (const listener of urlListeners) listener();
+  }, 0);
 }
 
 function subscribeToUrl(listener) {
